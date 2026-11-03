@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 協作文書與表單統計實戰工作坊 - 課程互動板</title>
+    <!-- Google Fonts: Noto Sans TC 確保繁體中文 100% 不缺字 -->
+    <link relpreconnect="" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 參考圖片的柔和蠟筆粉彩配色 */
+            --paper-bg: #FCFBF7;
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --crayon-blue: #88BCE2;
+            --crayon-blue-dark: #4E8DBE;
+            --crayon-coral: #F28585;
+            --crayon-coral-dark: #D85B5B;
+            --crayon-pink: #F2A2B8;
+            --crayon-green: #82C869;
+            --crayon-green-dark: #589E40;
+            --crayon-orange: #F5A64C;
+            --crayon-orange-dark: #D67D1E;
+            --crayon-yellow: #F7D046;
+            --crayon-purple: #B5ABD8;
+            --crayon-purple-dark: #7E72AC;
+            --text-main: #2F2E2C;
+            --text-muted: #5A5854;
+            --font-main: 'Noto Sans TC', 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--paper-bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-x: hidden;
+            position: relative;
+            /* 溫潤畫紙紋理感 */
+            background-image:
+                radial-gradient(rgba(215, 205, 190, 0.18) 1px, transparent 0),
+                radial-gradient(rgba(215, 205, 190, 0.12) 1px, transparent 0);
+            background-size: 28px 28px;
+            background-position: 0 0, 14px 14px;
+        }
+
+        /* 背景手繪塗鴉裝飾層 (參考圖1四周的星星、雲朵、月亮、閃電、螺旋) */
+        .doodle-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .doodle {
+            position: absolute;
+            opacity: 0.92;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.03));
+        }
+
+        /* 頂部導覽列 */
+        header {
+            padding: 14px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(252, 251, 247, 0.85);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px dashed rgba(181, 171, 216, 0.45);
+        }
+
+        .logo-area {
+            font-weight: 900;
+            font-size: 1.45rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-dots {
+            display: inline-flex;
+            gap: 6px;
+        }
+
+        .logo-dots span {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .page-indicator {
+            font-weight: 900;
+            background: #FFFFFF;
+            color: var(--text-main);
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-size: 1.15rem;
+            border: 2.5px solid var(--crayon-blue);
+            box-shadow: 3px 3px 0px rgba(136, 188, 226, 0.35);
+        }
+
+        /* 電子白板大版面主容器 */
+        .main-container {
+            flex: 1;
+            max-width: 1440px;
+            width: 94%;
+            margin: 12px auto;
+            padding: 10px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .slide-card {
+            background: rgba(252, 251, 247, 0.72);
+            backdrop-filter: blur(3px);
+            width: 100%;
+            min-height: 700px;
+            border-radius: 32px;
+            border: 3px solid rgba(226, 220, 208, 0.7);
+            box-shadow: 0 14px 40px rgba(80, 70, 60, 0.06);
+            padding: 44px 64px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            animation: fadeInSlide 0.35s ease-out forwards;
+        }
+
+        .slide-card.active {
+            display: flex;
+        }
+
+        @keyframes fadeInSlide {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 蠟筆斜線手繪大字效果 (參考圖2 WORK 與 圖3 PROCESS) */
+        .crayon-banner-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .crayon-char {
+            font-size: 3.4rem;
+            font-weight: 900;
+            line-height: 1.1;
+            padding: 6px 16px;
+            border-radius: 18px;
+            display: inline-block;
+            position: relative;
+            letter-spacing: 2px;
+            /* 蠟筆斜線填充感 */
+            background-image: repeating-linear-gradient(
+                -25deg,
+                currentColor 0px,
+                currentColor 3px,
+                rgba(255,255,255,0.42) 3px,
+                rgba(255,255,255,0.42) 6px
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-stroke: 2.5px currentColor;
+            color: transparent;
+            filter: drop-shadow(2px 3px 0px rgba(0,0,0,0.04));
+        }
+
+        .c-pink { color: var(--crayon-pink); }
+        .c-blue { color: var(--crayon-blue); }
+        .c-purple { color: var(--crayon-purple); }
+        .c-orange { color: var(--crayon-orange); }
+        .c-green { color: var(--crayon-green); }
+        .c-coral { color: var(--crayon-coral); }
+        .c-yellow { color: #EAB826; }
+
+        /* 圖2 風格：左側 2x2 大字方塊 + 右側手繪圓圈編號列表 */
+        .split-work-layout {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 52px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .work-2x2-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            justify-items: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .work-big-letter {
+            font-size: 6.2rem;
+            font-weight: 900;
+            line-height: 1;
+            background-image: repeating-linear-gradient(
+                -22deg,
+                currentColor 0px,
+                currentColor 4px,
+                rgba(255,255,255,0.5) 4px,
+                rgba(255,255,255,0.5) 8px
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-stroke: 3.5px currentColor;
+            color: transparent;
+            transform: rotate(var(--rot, -3deg));
+            user-select: none;
+        }
+
+        /* 手繪雙線圓圈數字 (參考圖2 & 圖3 的 1, 2, 3 圓圈) */
+        .sketch-num {
+            width: 74px;
+            height: 74px;
+            min-width: 74px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.3rem;
+            font-weight: 900;
+            position: relative;
+            background: #FFFFFF;
+            border: 3.5px solid currentColor;
+            box-shadow: inset 0 0 0 3px #FFFFFF, inset 0 0 0 5px currentColor;
+        }
+
+        .sketch-num::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 48% 52% 50% 50% / 52% 48% 52% 48%;
+            border: 2px solid currentColor;
+            opacity: 0.55;
+            transform: rotate(-6deg);
+        }
+
+        /* 右側垂直步驟列 (圖2風格) */
+        .step-list-vertical {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .step-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            background: rgba(255, 255, 255, 0.75);
+            padding: 16px 24px;
+            border-radius: 22px;
+            border: 2px solid rgba(230, 224, 212, 0.8);
+        }
+
+        .step-row-content h3 {
+            font-size: 1.65rem;
+            font-weight: 900;
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .step-row-content p {
+            font-size: 1.3rem;
+            color: var(--text-main);
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.55;
+        }
+
+        /* 橫向三步驟/四步驟流程 (參考圖3 PROCESS 1 -> 2 -> 3) */
+        .process-horizontal {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin: 24px 0;
+        }
+
+        .process-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 24px 20px;
+            border-radius: 26px;
+            border: 2.5px solid rgba(230, 224, 212, 0.85);
+        }
+
+        .process-step h3 {
+            font-size: 1.6rem;
+            font-weight: 900;
+            margin: 16px 0 8px 0;
+        }
+
+        .process-step p {
+            font-size: 1.22rem;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .process-arrow {
+            align-self: center;
+            color: var(--crayon-purple);
+            font-size: 2.8rem;
+            font-weight: 900;
+            user-select: none;
+            margin-top: -40px;
+        }
+
+        /* 一般投影片標題與文字 */
+        h1 {
+            font-size: 3.1rem;
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1.3;
+            margin-bottom: 18px;
+        }
+
+        h2 {
+            font-size: 2.25rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        p, li {
+            font-size: 1.32rem;
+            line-height: 1.7;
+            color: var(--text-main);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .badge-pill {
+            display: inline-block;
+            background: #FFF6CC;
+            color: #946800;
+            padding: 8px 22px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            margin-bottom: 18px;
+            border: 2.5px solid var(--crayon-yellow);
+        }
+
+        /* 提示詞複製框 */
+        .prompt-label {
+            font-size: 1.3rem;
+            margin: 8px 0 6px 0;
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .prompt-container {
+            position: relative;
+            margin: 10px 0 16px 0;
+        }
+
+        .prompt-box {
+            background: #FFFFFF;
+            border: 3px dashed var(--crayon-blue);
+            border-radius: 22px;
+            padding: 20px 110px 20px 26px;
+            font-family: var(--font-main);
+            font-size: 1.2rem;
+            font-weight: 500;
+            line-height: 1.7;
+            color: var(--text-main);
+            max-height: 220px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            box-shadow: 0 6px 16px rgba(136, 188, 226, 0.12);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: var(--crayon-coral);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.08rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 0px var(--crayon-coral-dark);
+            font-family: var(--font-main);
+            z-index: 5;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        .copy-btn.copied {
+            background: var(--crayon-green);
+            box-shadow: 0 4px 0px var(--crayon-green-dark);
+        }
+
+        .cmd-tab-btn {
+            background: #FFFFFF;
+            border: 2.5px solid var(--crayon-blue);
+            color: var(--text-main);
+            padding: 10px 14px;
+            border-radius: 14px;
+            font-size: 1.08rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cmd-tab-btn:hover {
+            border-color: var(--crayon-coral);
+            background: #FFF8F8;
+            transform: translateY(-2px);
+        }
+        .cmd-tab-btn.active {
+            background: var(--crayon-coral);
+            border-color: var(--crayon-coral-dark);
+            color: #FFFFFF;
+            box-shadow: 0 4px 0 var(--crayon-coral-dark);
+        }
+
+        /* 雙欄與四宮格卡片 */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+            margin: 14px 0;
+        }
+
+        .card-item {
+            background: #FFFFFF;
+            border: 3px solid var(--crayon-blue);
+            padding: 20px 26px;
+            border-radius: 24px;
+            box-shadow: 4px 5px 0px rgba(136, 188, 226, 0.22);
+        }
+
+        .card-item.coral { border-color: var(--crayon-coral); box-shadow: 4px 5px 0px rgba(242, 133, 133, 0.22); }
+        .card-item.green { border-color: var(--crayon-green); box-shadow: 4px 5px 0px rgba(130, 200, 105, 0.22); }
+        .card-item.orange { border-color: var(--crayon-orange); box-shadow: 4px 5px 0px rgba(245, 166, 76, 0.22); }
+        .card-item.purple { border-color: var(--crayon-purple); box-shadow: 4px 5px 0px rgba(181, 171, 216, 0.25); }
+
+        .card-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+            font-weight: 900;
+        }
+
+        .highlight-box {
+            background: #FFFFFF;
+            border: 3px solid var(--crayon-orange);
+            border-left: 10px solid var(--crayon-orange);
+            padding: 18px 26px;
+            border-radius: 20px;
+            margin: 14px 0;
+            font-size: 1.25rem;
+        }
+
+        /* 課程計時器：小人物跑進度條 */
+        .timer-wrap {
+            flex: 1;
+            max-width: 980px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .timer-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 118px;
+        }
+
+        .timer-clock {
+            font-size: 1.35rem;
+            font-weight: 900;
+            color: var(--text-main);
+            background: #FFFFFF;
+            border: 2.5px solid var(--crayon-purple);
+            border-radius: 50px;
+            padding: 3px 14px;
+            font-variant-numeric: tabular-nums;
+            letter-spacing: 1px;
+        }
+
+        .timer-clock.overtime {
+            color: var(--crayon-coral-dark);
+            border-color: var(--crayon-coral);
+            animation: overtimePulse 1s ease-in-out infinite;
+        }
+
+        @keyframes overtimePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 6px;
+        }
+
+        .timer-ctrl-btn {
+            background: #FFFFFF;
+            border: 2px solid #D6D3CD;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            padding: 2px 10px;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-family: var(--font-main);
+        }
+
+        .timer-ctrl-btn:hover {
+            border-color: var(--crayon-purple);
+            color: var(--crayon-purple-dark);
+        }
+
+        .timer-track-area {
+            flex: 1;
+            position: relative;
+            padding-top: 40px;
+        }
+
+        .timer-track {
+            display: flex;
+            gap: 4px;
+            height: 30px;
+            border-radius: 50px;
+            overflow: hidden;
+            border: 2.5px solid #E2DCD0;
+            background: #FFFFFF;
+        }
+
+        .timer-seg {
+            position: relative;
+            background: #E7E5E1;
+            overflow: hidden;
+        }
+
+        .timer-seg-fill {
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 0%;
+            transition: width 0.8s linear;
+            background-image: repeating-linear-gradient(
+                -45deg,
+                rgba(255,255,255,0.28) 0px,
+                rgba(255,255,255,0.28) 8px,
+                transparent 8px,
+                transparent 16px
+            );
+            background-size: 200% 100%;
+            animation: stripeMove 1.2s linear infinite;
+        }
+
+        @keyframes stripeMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 45px 0; }
+        }
+
+        .timer-seg-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: 900;
+            color: #9C988F;
+            white-space: nowrap;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .timer-seg.reached .timer-seg-label {
+            color: #FFFFFF;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+        }
+
+        .timer-runner {
+            position: absolute;
+            top: 0;
+            left: 0%;
+            transform: translateX(-50%);
+            transition: left 1s linear;
+            font-size: 2.1rem;
+            line-height: 1;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .timer-runner-inner {
+            display: inline-block;
+            transform: scaleX(-1); /* 讓黑貓面向右邊前進 */
+        }
+
+        .timer-hint {
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        @media (max-width: 1024px) {
+            footer { flex-wrap: wrap; }
+            .timer-wrap { order: -1; flex-basis: 100%; max-width: none; }
+            .timer-seg-label { font-size: 0.75rem; }
+        }
+
+        /* 底部導覽列 */
+        footer {
+            padding: 16px 24px;
+            background: rgba(252, 251, 247, 0.88);
+            border-top: 2px dashed rgba(181, 171, 216, 0.45);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 28px;
+            position: relative;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            background: #FFFFFF;
+            border: 3px solid var(--text-main);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            font-weight: 900;
+            font-size: 1.22rem;
+            padding: 10px 34px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 4px 4px 0px var(--crayon-yellow);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: var(--crayon-yellow);
+            transform: translateY(-2px);
+        }
+
+        .nav-btn:disabled {
+            border-color: #D6D3CD;
+            color: #BDB8B0;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* 響應式支援 */
+        @media (max-width: 1024px) {
+            .split-work-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .work-2x2-box {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+            .work-big-letter {
+                font-size: 4rem;
+            }
+            .process-horizontal {
+                flex-direction: column;
+            }
+            .process-arrow {
+                transform: rotate(90deg);
+                margin: 0;
+            }
+            .slide-card {
+                padding: 28px 24px;
+                min-height: auto;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 手繪蠟筆背景塗鴉 (對應參考圖1四周的星星、雲朵、彎月、閃電、螺旋) -->
+    <div class="doodle-bg" aria-hidden="true">
+        <!-- 左上黃色星星 -->
+        <svg class="doodle" style="top: 8%; left: 3%; width: 72px;" viewBox="0 0 100 100">
+            <path d="M50 5 L60 38 L93 38 L66 57 L76 92 L50 70 L24 92 L34 57 L7 38 L40 38 Z" fill="#F7D046" stroke="#EAB826" stroke-width="4" stroke-linejoin="round"/>
+        </svg>
+        <!-- 上方偏左橘色光芒星 -->
+        <svg class="doodle" style="top: 2%; left: 22%; width: 68px;" viewBox="0 0 100 100">
+            <path d="M50 8 L50 92 M8 50 L92 50 M20 20 L80 80 M80 20 L20 80" stroke="#F5A64C" stroke-width="9" stroke-linecap="round"/>
+        </svg>
+        <!-- 左中粉色十字星 -->
+        <svg class="doodle" style="top: 38%; left: 4%; width: 64px;" viewBox="0 0 100 100">
+            <path d="M50 10 Q54 46 90 50 Q54 54 50 90 Q46 54 10 50 Q46 46 50 10 Z" fill="#F2A2B8" stroke="#E589A3" stroke-width="3"/>
+        </svg>
+        <!-- 左下綠色空心星 -->
+        <svg class="doodle" style="top: 64%; left: 1.5%; width: 70px;" viewBox="0 0 100 100">
+            <path d="M50 10 L61 35 L88 28 L72 51 L90 73 L63 72 L52 95 L40 71 L14 74 L30 52 L14 29 L40 35 Z" fill="none" stroke="#82C869" stroke-width="7" stroke-linejoin="round"/>
+        </svg>
+        <!-- 左底藍色十字星 -->
+        <svg class="doodle" style="bottom: 3%; left: 7%; width: 78px;" viewBox="0 0 100 100">
+            <path d="M50 5 Q55 45 95 50 Q55 55 50 95 Q45 55 5 50 Q45 45 50 5 Z" fill="#88BCE2" opacity="0.85"/>
+        </svg>
+        <!-- 右上黃色十字星 -->
+        <svg class="doodle" style="top: 3%; right: 18%; width: 78px;" viewBox="0 0 100 100">
+            <path d="M50 5 Q55 45 95 50 Q55 55 50 95 Q45 55 5 50 Q45 45 50 5 Z" fill="#F7D046"/>
+        </svg>
+        <!-- 右上紫色手繪彈簧線 -->
+        <svg class="doodle" style="top: 6%; right: 2%; width: 90px;" viewBox="0 0 120 80">
+            <path d="M10 60 C15 20, 45 20, 40 50 C35 70, 20 55, 35 30 C55 5, 85 20, 75 50 C68 68, 55 50, 70 25 C88 2, 115 20, 110 45" fill="none" stroke="#B5ABD8" stroke-width="6" stroke-linecap="round"/>
+        </svg>
+        <!-- 右中藍色雲朵 -->
+        <svg class="doodle" style="top: 30%; right: 3%; width: 92px;" viewBox="0 0 120 80">
+            <path d="M30 65 Q12 65 12 48 Q12 33 26 31 Q30 14 48 16 Q62 8 76 20 Q96 18 100 36 Q112 40 108 54 Q105 65 88 65 Z" fill="#88BCE2" opacity="0.85"/>
+        </svg>
+        <!-- 右側黃色閃電 -->
+        <svg class="doodle" style="top: 46%; right: 1%; width: 58px;" viewBox="0 0 80 120">
+            <path d="M35 10 L15 62 L42 62 L28 110 L70 48 L42 48 L60 10 Z" fill="#F7D046"/>
+        </svg>
+        <!-- 右下珊瑚紅彎月 -->
+        <svg class="doodle" style="bottom: 22%; right: 4%; width: 68px;" viewBox="0 0 100 100">
+            <path d="M55 15 C80 22, 88 58, 68 78 C48 96, 18 82, 18 72 C36 78, 56 64, 56 44 C56 28, 44 18, 55 15 Z" fill="#F28585"/>
+        </svg>
+        <!-- 右底綠色星星 -->
+        <svg class="doodle" style="bottom: 2%; right: 12%; width: 72px;" viewBox="0 0 100 100">
+            <path d="M50 12 L62 42 L92 44 L66 62 L76 92 L50 74 L24 92 L34 62 L8 44 L38 42 Z" fill="#82C869"/>
+        </svg>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-area">
+            <div class="logo-dots">
+                <span style="background: var(--crayon-coral);"></span>
+                <span style="background: var(--crayon-yellow);"></span>
+                <span style="background: var(--crayon-green);"></span>
+                <span style="background: var(--crayon-blue);"></span>
+            </div>
+            AI 協作文書與表單統計工作坊
+        </div>
+        <div class="page-indicator" id="pageIndicator">第 1 頁 / 共 17 頁</div>
+    </header>
+
+    <!-- Main Slide Deck Container -->
+    <main class="main-container">
+
+        <!-- 頁 1：封面 -->
+        <div class="slide-card active" id="s1">
+            <div style="text-align: center;">
+                <span class="badge-pill">國小志工團幹部・6 人小班・2 小時實戰</span>
+                <div class="crayon-banner-title" style="margin-top: 10px;">
+                    <span class="crayon-char c-pink">A</span>
+                    <span class="crayon-char c-blue">I</span>
+                    <span class="crayon-char c-purple">協</span>
+                    <span class="crayon-char c-orange">作</span>
+                    <span class="crayon-char c-green">工</span>
+                    <span class="crayon-char c-coral">作</span>
+                    <span class="crayon-char c-blue">坊</span>
+                </div>
+                <h1>文書處理與表單統計實戰</h1>
+                <p style="font-size: 1.65rem; color: var(--text-muted); margin-top: 12px; font-weight: 900;">
+                    把志工團務行政從 <span style="color: var(--crayon-coral-dark); text-decoration: underline;">2 小時</span> 縮短到 <span style="color: var(--crayon-green-dark); text-decoration: underline;">10 分鐘</span>！
+                </p>
+            </div>
+            <div style="background: #FFFFFF; border: 3.5px dashed var(--crayon-orange); padding: 26px 32px; border-radius: 26px; text-align: center; margin-top: 32px;">
+                <p style="margin: 0; font-weight: 900; font-size: 1.4rem; color: var(--crayon-orange-dark);">
+                    ✨ 準備好解放雙手了嗎？讓我們用 AI 輕鬆搞定志工團的大小行政雜務！
+                </p>
+            </div>
+        </div>
+
+        <!-- 頁 2：流程 -->
+        <div class="slide-card" id="s2">
+            <div class="split-work-layout">
+                <div>
+                    <div class="work-2x2-box">
+                        <span class="work-big-letter c-green" style="--rot: -6deg;">課</span>
+                        <span class="work-big-letter c-purple" style="--rot: 5deg;">程</span>
+                        <span class="work-big-letter c-yellow" style="--rot: 4deg;">流</span>
+                        <span class="work-big-letter c-coral" style="--rot: -5deg;">程</span>
+                    </div>
+                    <p style="text-align: center; font-size: 1.5rem; font-weight: 900; color: var(--text-muted); margin-top: 8px;">2 小時全流程掌握</p>
+                </div>
+                <div class="step-list-vertical">
+                    <div class="step-row">
+                        <div class="sketch-num" style="color: var(--crayon-blue);">1</div>
+                        <div class="step-row-content">
+                            <h3 style="color: var(--crayon-blue-dark);">20min 工具定位與心法暖身</h3>
+                            <p>掌握常用 AI 工具組合與 ROCE 公式，生出志工招募說明文</p>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="sketch-num" style="color: var(--crayon-coral);">2</div>
+                        <div class="step-row-content">
+                            <h3 style="color: var(--crayon-coral-dark);">1h45m 主專題實作</h3>
+                            <p>拉 6 欄位表單、一鍵 GAS 自動生表單、AI 產模擬資料與公式統計</p>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="sketch-num" style="color: var(--crayon-green);">3</div>
+                        <div class="step-row-content">
+                            <h3 style="color: var(--crayon-green-dark);">45m 分流沙盒</h3>
+                            <p>自選 6 大微專題或真實檔案健檢，進行現場一對一教學</p>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="sketch-num" style="color: var(--crayon-orange);">4</div>
+                        <div class="step-row-content">
+                            <h3 style="color: var(--crayon-orange-dark);">10m 成果交流</h3>
+                            <p>亮點分享、解決卡關、領取指令速查表</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁 3 (新增)：我常用的 AI 工具 -->
+        <div class="slide-card" id="s3">
+            <div>
+                <span class="badge-pill" style="margin-bottom: 12px;">🛠️ 工欲善其事，必先利其器</span>
+                <h2 style="margin-bottom: 16px;">🤖 我常用的 AI 工具組合心法</h2>
+            </div>
+
+            <div class="process-horizontal" style="gap: 16px; margin: 10px 0 20px 0;">
+                <div class="process-step" style="border-color: var(--crayon-blue); padding: 22px 18px;">
+                    <div class="sketch-num" style="color: var(--crayon-blue); width: 62px; height: 62px; min-width: 62px; font-size: 1.9rem;">1</div>
+                    <h3 style="color: var(--crayon-blue-dark); font-size: 1.45rem; margin: 14px 0 6px 0;">對話與釐清架構</h3>
+                    <p style="font-size: 1.25rem; font-weight: 900; color: var(--crayon-blue-dark); margin-bottom: 8px;">慣用的已有記憶的 AI</p>
+                    <p style="font-size: 1.15rem; color: var(--text-muted);">(我是 GEMINI)</p>
+                    <div style="background: #EBF5FB; border-radius: 12px; padding: 10px; margin-top: 10px; font-size: 1.05rem; font-weight: 700;">
+                        💡 用平常最熟悉、最懂你脈絡的 AI 來發想草稿與盤點需求
+                    </div>
+                </div>
+
+                <div class="process-arrow" style="font-size: 2.2rem;">➜</div>
+
+                <div class="process-step" style="border-color: var(--crayon-orange); padding: 22px 18px;">
+                    <div class="sketch-num" style="color: var(--crayon-orange); width: 62px; height: 62px; min-width: 62px; font-size: 1.9rem;">2</div>
+                    <h3 style="color: var(--crayon-orange-dark); font-size: 1.45rem; margin: 14px 0 6px 0;">製圖與視覺海報</h3>
+                    <p style="font-size: 1.25rem; font-weight: 900; color: var(--crayon-orange-dark); margin-bottom: 8px;">ChatGPT (GPT-4o)</p>
+                    <p style="font-size: 1.15rem; color: var(--text-muted);">(DALL·E 生圖與視覺生成)</p>
+                    <div style="background: #FEF5EB; border-radius: 12px; padding: 10px; margin-top: 10px; font-size: 1.05rem; font-weight: 700;">
+                        🎨 擅長產生活動宣傳圖、LINE 群插圖、簡報視覺
+                    </div>
+                </div>
+
+                <div class="process-arrow" style="font-size: 2.2rem;">➜</div>
+
+                <div class="process-step" style="border-color: var(--crayon-green); padding: 22px 18px;">
+                    <div class="sketch-num" style="color: var(--crayon-green); width: 62px; height: 62px; min-width: 62px; font-size: 1.9rem;">3</div>
+                    <h3 style="color: var(--crayon-green-dark); font-size: 1.45rem; margin: 14px 0 6px 0;">聰明大腦深度解題</h3>
+                    <p style="font-size: 1.25rem; font-weight: 900; color: var(--crayon-green-dark); margin-bottom: 8px;">Claude / ChatGPT / Grok</p>
+                    <p style="font-size: 1.15rem; color: var(--text-muted);">(邏輯、複雜公式、程式碼)</p>
+                    <div style="background: #EDF9EB; border-radius: 12px; padding: 10px; margin-top: 10px; font-size: 1.05rem; font-weight: 700;">
+                        🧠 專門處理邏輯推演、試算表公式與 GAS 自動化
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 6px; margin-bottom: 0; text-align: center; border-color: var(--crayon-purple); background: #FAF9FE;">
+                <p style="margin:0; font-weight: 900; font-size: 1.35rem; color: var(--crayon-purple-dark);">
+                    ⭐ 核心實戰心法：拿到工作坊打包的精準指令之後，帶去<strong>「聰明大腦」</strong>直接生成最高品質的結果！
+                </p>
+            </div>
+        </div>
+
+        <!-- 頁 4：心法 ROCE -->
+        <div class="slide-card" id="s4">
+            <div class="split-work-layout">
+                <div>
+                    <div class="work-2x2-box">
+                        <span class="work-big-letter c-green" style="--rot: -6deg;">R</span>
+                        <span class="work-big-letter c-purple" style="--rot: 5deg;">O</span>
+                        <span class="work-big-letter c-yellow" style="--rot: 4deg;">C</span>
+                        <span class="work-big-letter c-coral" style="--rot: -4deg;">E</span>
+                    </div>
+                    <p style="text-align: center; font-size: 1.5rem; font-weight: 900; color: var(--text-muted);">黃金心法四要素</p>
+                </div>
+                <div class="step-list-vertical" style="gap: 16px;">
+                    <div class="step-row">
+                        <div class="sketch-num" style="color: var(--crayon-green);">1</div>
+                        <div class="step-row-content">
+                            <h3 style="color: var(--crayon-green-dark);">Role 角色</h3>
+                            <p>告訴 AI 它是誰（如：志工團幹部）</p>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="sketch-num" style="color: var(--crayon-purple-dark);">2</div>
+                        <div class="step-row-content">
+                            <h3 style="color: var(--crayon-purple-dark);">Task 任務</h3>
+                            <p>明確交代要做什麼事情</p>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="sketch-num" style="color: var(--crayon-orange);">3</div>
+                        <div class="step-row-content">
+                            <h3 style="color: var(--crayon-orange-dark);">Condition 條件</h3>
+                            <p>限制與細節（如：字數、欄位）</p>
+                        </div>
+                    </div>
+                    <div class="step-row">
+                        <div class="sketch-num" style="color: var(--crayon-coral);">4</div>
+                        <div class="step-row-content">
+                            <h3 style="color: var(--crayon-coral-dark);">Format 格式</h3>
+                            <p>期望的呈現方式（如：表格、條列）</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top: 20px; margin-bottom: 0; text-align: center;">
+                <p style="margin:0; font-weight: 900; font-size: 1.3rem;">💡 小撇步：「答得不好是少了其中一個字母，缺哪個補哪個」</p>
+            </div>
+        </div>
+
+        <!-- 頁 5：主專題概述 -->
+        <div class="slide-card" id="s5">
+            <div style="text-align: center;">
+                <span class="badge-pill">活動時間：11/28 六 08:00–15:00</span>
+                <h2 style="justify-content: center; font-size: 2.4rem;">🏆 主專題概述：體表會志工招募與統計</h2>
+                <p style="font-size: 1.35rem; background: #FFF; display: inline-block; padding: 10px 26px; border-radius: 50px; border: 2.5px solid var(--crayon-purple);">
+                    <strong>6 核心欄位：</strong>姓名、LINE ID、原屬組別、支援時間、工作項目、備註
+                </p>
+            </div>
+
+            <div class="process-horizontal">
+                <div class="process-step">
+                    <div class="sketch-num" style="color: var(--crayon-blue);">1</div>
+                    <h3 style="color: var(--crayon-blue-dark);">寫說明文與題目架構</h3>
+                    <p>產出溫暖招募文與 6 大欄位表單題型建議</p>
+                </div>
+                <div class="process-arrow">➜</div>
+                <div class="process-step">
+                    <div class="sketch-num" style="color: var(--crayon-orange);">2</div>
+                    <h3 style="color: var(--crayon-orange-dark);">產 20 筆模擬資料</h3>
+                    <p>讓 AI 生成逼真測試報名表直接貼入試算表</p>
+                </div>
+                <div class="process-arrow">➜</div>
+                <div class="process-step">
+                    <div class="sketch-num" style="color: var(--crayon-green);">3</div>
+                    <h3 style="color: var(--crayon-green-dark);">試算表萬用字元公式統計</h3>
+                    <p>自動計算複選工作項目與各時段支援人數</p>
+                </div>
+                <div class="process-arrow">➜</div>
+                <div class="process-step">
+                    <div class="sketch-num" style="color: var(--crayon-coral);">4</div>
+                    <h3 style="color: var(--crayon-coral-dark);">群組回報與行前通知</h3>
+                    <p>一鍵產出團長回報、缺額徵求與行前提醒</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁 6：實作一指令拆解教學 -->
+        <div class="slide-card" id="s6">
+            <h2 style="margin-bottom: 12px;">🔍 實作一指令大拆解：這段文字指令是怎麼一步步寫出來的？</h2>
+            <p style="font-size: 1.18rem; color: var(--text-muted); margin-bottom: 10px;">
+                看起來很長的指令不用怕！其實只是把 <strong>4 塊積木</strong> 照順序拼起來（顏色對應下方 4 步驟）：
+            </p>
+
+            <!-- 彩色拆解對照指令框 -->
+            <div style="background: #FFFFFF; border: 3px solid var(--text-main); border-radius: 22px; padding: 16px 22px; font-size: 1.12rem; line-height: 1.75; margin-bottom: 16px; box-shadow: 4px 4px 0px rgba(0,0,0,0.06);">
+                <span style="background: #E1F0FA; color: #245D8C; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【① 角色與情境】你現在是國小志工團的幹部，我們即將在 11/28（六）08:00-15:00 舉辦學校年度大事「體育表演會（體表會）」，需要招募各組志工當天來支援。</span>
+                <span style="background: #FFF0DB; color: #9E5808; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【② 明確任務】請幫我完成兩件事：1. 撰寫一段約 150 字、溫暖且有號召力的「Google 表單頂部說明文字」... 2. 設計這份「體表會志工支援招募表單」的題目架構，</span>
+                <span style="background: #E5F6DF; color: #2F6E1E; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【③ 細節與欄位條件】包含：基本資料（姓名、line ID、原屬組別：導護組、圖書組...）；支援時間（08:00~09:20...）；工作項目（複選：報到引導、秩序維安...）；備註欄。</span>
+                <span style="background: #FFE5E5; color: #A62B2B; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【④ 格式與防呆】請標註每一題建議的 Google 表單題型（簡答、單選、核取方塊、下拉式選單），確保志工填寫時不會填錯格式。</span>
+            </div>
+
+            <!-- 四步驟架構分析 -->
+            <div class="process-horizontal" style="margin: 8px 0 0 0; gap: 12px;">
+                <div class="process-step" style="border-color: var(--crayon-blue); padding: 16px 14px;">
+                    <div class="sketch-num" style="color: var(--crayon-blue); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">1</div>
+                    <h3 style="color: var(--crayon-blue-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">角色與活動背景</h3>
+                    <p style="font-size: 1.08rem;">先講清楚<strong>你是誰＋辦什麼活動＋日期時間</strong>，AI 寫出來的語氣才會像溫暖的幹部而非冰冷公文。</p>
+                </div>
+                <div class="process-arrow" style="font-size: 2rem;">➜</div>
+                <div class="process-step" style="border-color: var(--crayon-orange); padding: 16px 14px;">
+                    <div class="sketch-num" style="color: var(--crayon-orange); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">2</div>
+                    <h3 style="color: var(--crayon-orange-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">拆解任務編號</h3>
+                    <p style="font-size: 1.08rem;">要它做兩件事就標上<strong>「1. 寫說明文、2. 設計題目」</strong>，並加上「150字、溫暖有號召力」標準。</p>
+                </div>
+                <div class="process-arrow" style="font-size: 2rem;">➜</div>
+                <div class="process-step" style="border-color: var(--crayon-green); padding: 16px 14px;">
+                    <div class="sketch-num" style="color: var(--crayon-green); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">3</div>
+                    <h3 style="color: var(--crayon-green-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">餵入真實選項</h3>
+                    <p style="font-size: 1.08rem;"><strong>AI 不會通靈知道學校有哪些組！</strong>把組別、時段、工作項目選項寫在括號裡，產出才不用重改。</p>
+                </div>
+                <div class="process-arrow" style="font-size: 2rem;">➜</div>
+                <div class="process-step" style="border-color: var(--crayon-coral); padding: 16px 14px;">
+                    <div class="sketch-num" style="color: var(--crayon-coral); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">4</div>
+                    <h3 style="color: var(--crayon-coral-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">指定格式防呆</h3>
+                    <p style="font-size: 1.08rem;">請 AI 標註<strong>「建議的表單題型（單選/核取方塊）」</strong>，幫我們做好防呆，後續試算表才好統計！</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁 7：範本 1 與 2 -->
+        <div class="slide-card" id="s7">
+            <h2>📝 實作範本 1 與 2（點擊右側按鈕直接複製）</h2>
+            <div class="prompt-label" style="color: var(--crayon-blue-dark);">
+                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-blue);">1</span>
+                範本 1：招募說明文與題目架構
+            </div>
+            <div class="prompt-container">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box">你現在是國小志工團的幹部，我們即將在 11/28（六）08:00-15:00 舉辦學校年度大事「體育表演會（體表會）」，需要招募各組志工當天來支援。請幫我完成兩件事：1. 撰寫一段約 150 字、溫暖且有號召力的「Google 表單頂部說明文字」，邀請志工夥伴一起來為孩子們加油並協助活動順利進行。2. 設計這份「體表會志工支援招募表單」的題目架構，包含：基本資料（姓名、line ID、原屬組別：導護組、圖書組、園藝組、國輔、英輔、數輔、安全照護組、資訊美編組、人資組、熊熊組、生活媽媽組、健輔組、其他）；支援時間（08:00~09:20／09:20~10:30／10:30~賽事結束／其他）；希望支援的工作項目（複選或志願序：報到引導、秩序維安、器材場佈、攝影紀錄、醫護支援、機動支援）；備註欄。請標註每一題建議的 Google 表單題型（簡答、單選、核取方塊、下拉式選單），確保志工填寫時不會填錯格式。</div>
+            </div>
+
+            <div class="prompt-label" style="color: var(--crayon-orange-dark);">
+                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-orange);">2</span>
+                範本 2：產生 20 筆模擬測試資料
+            </div>
+            <div class="prompt-container">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="border-color: var(--crayon-orange);">請依上述 6 個欄位，產生 20 筆『虛構』的志工報名資料（姓名用假名、LINE ID 用假帳號）。要求：各組別、時段、工作項目分布不平均，工作項目可複選（用頓號分隔），備註 5 筆有內容。以表格輸出，方便我直接貼進 Google 試算表。</div>
+            </div>
+        </div>
+
+        <!-- 頁 8：一鍵自動生成表單魔法（Google Apps Script 版） -->
+        <div class="slide-card" id="s8">
+            <div>
+                <span class="badge-pill" style="margin-bottom: 10px;">⚡ 連表單都不用自己拉！30 秒自動生出整個 Google 表單</span>
+                <h2 style="margin-bottom: 12px;">🪄 一鍵自動生成表單魔法（Google Apps Script 版）</h2>
+            </div>
+
+            <!-- 課堂 3 步驟操作引導 -->
+            <div class="process-horizontal" style="margin: 6px 0 14px 0; gap: 12px;">
+                <div class="process-step" style="border-color: var(--crayon-blue); padding: 14px 16px;">
+                    <div class="sketch-num" style="color: var(--crayon-blue); width: 52px; height: 52px; min-width: 52px; font-size: 1.65rem;">1</div>
+                    <h3 style="color: var(--crayon-blue-dark); font-size: 1.3rem; margin: 8px 0 4px 0;">開啟 Apps Script</h3>
+                    <p style="font-size: 1.08rem;">打開 <strong>Google 雲端硬碟</strong> → 左上角「<strong>新增</strong>」→「<strong>更多</strong>」→ 點擊「<strong>Google Apps Script</strong>」</p>
+                </div>
+                <div class="process-arrow" style="font-size: 2rem;">➜</div>
+                <div class="process-step" style="border-color: var(--crayon-orange); padding: 14px 16px;">
+                    <div class="sketch-num" style="color: var(--crayon-orange); width: 52px; height: 52px; min-width: 52px; font-size: 1.65rem;">2</div>
+                    <h3 style="color: var(--crayon-orange-dark); font-size: 1.3rem; margin: 8px 0 4px 0;">貼上程式碼並執行</h3>
+                    <p style="font-size: 1.08rem;">清空原本內容，貼上 AI 產出的程式碼，按上方「💾 <strong>儲存</strong>」再按「▶️ <strong>執行</strong>」（首次授權點允許）</p>
+                </div>
+                <div class="process-arrow" style="font-size: 2rem;">➜</div>
+                <div class="process-step" style="border-color: var(--crayon-green); padding: 14px 16px;">
+                    <div class="sketch-num" style="color: var(--crayon-green); width: 52px; height: 52px; min-width: 52px; font-size: 1.65rem;">3</div>
+                    <h3 style="color: var(--crayon-green-dark); font-size: 1.3rem; margin: 8px 0 4px 0;">取得表單連結</h3>
+                    <p style="font-size: 1.08rem;">查看下方「<strong>執行紀錄（Log）</strong>」，直接點擊印出的「<strong>編輯連結</strong>」與「<strong>填寫連結</strong>」即完成！</p>
+                </div>
+            </div>
+
+            <div class="prompt-label" style="color: var(--crayon-purple-dark); margin-top: 2px;">
+                🪄 實作一表單自動生成提示詞（點擊右側複製貼給 AI）：
+            </div>
+            <div class="prompt-container" style="margin-top: 6px; margin-bottom: 0;">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="max-height: 210px; border-color: var(--crayon-purple);">請幫我寫一段 Google Apps Script (GAS) 程式碼，執行後能自動在我的 Google 雲端硬碟建立一份名為「11/28 體表會志工支援招募表單」的 Google 表單，並在執行紀錄（Log）印出表單的「編輯連結」與「填寫連結」。
+
+表單內容請依以下設定建立：
+1. 表單頂部說明文字：約 150 字溫暖且有號召力的說明，邀請國小志工團夥伴在 11/28（六）08:00-15:00 一起來支援學校年度大事「體育表演會（體表會）」，為孩子們加油並協助活動順利進行。
+2. 表單題目與題型設定：
+- 姓名（簡答題，必填）
+- LINE ID（簡答題，必填）
+- 原屬組別（下拉式選單，必填：導護組、圖書組、園藝組、國輔、英輔、數輔、安全照護組、資訊美編組、人資組、熊熊組、生活媽媽組、健輔組、其他）
+- 支援時間（核取方塊複選，必填：08:00~09:20、09:20~10:30、10:30~賽事結束、其他）
+- 希望支援的工作項目（核取方塊複選，必填：報到引導、秩序維安、器材場佈、攝影紀錄、醫護支援、機動支援）
+- 備註欄（簡答或段落，非必填）
+
+請只輸出完整的 `function createVolunteerForm() { ... }` 程式碼（選項中的「其他」請直接列為一般選項字串確保執行不報錯），並用 3 個超簡單步驟說明如何貼到 Google Apps Script 裡執行。</div>
+            </div>
+        </div>
+
+        <!-- 頁 9：範本 3 與 4 -->
+        <div class="slide-card" id="s9">
+            <h2>📊 實作範本 3 與 4（試算表統計與回報）</h2>
+            <div class="prompt-label" style="color: var(--crayon-green-dark);">
+                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-green);">3</span>
+                範本 3：試算表公式與統計
+            </div>
+            <div class="prompt-container">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="border-color: var(--crayon-green);">我的試算表欄位：A 姓名、B LINE ID、C 原屬組別、D 支援時間、E 工作項目（複選，用頓號分隔）、F 備註，資料從第 2 列開始。請給我可直接貼上的 Google 試算表公式，統計：①各時段人數 ②各工作項目人數（複選要能算）③總報名人數。複選欄位請用萬用字元 *，並加一欄「人數低於 3 顯示 ⚠️缺人」的提醒。用表格說明每個公式貼在哪一格。</div>
+            </div>
+            <div style="background: #FFF8D6; border: 2px solid var(--crayon-yellow); padding: 10px 20px; border-radius: 14px; font-size: 1.2rem; font-weight: 900; color: #8C6200; margin-bottom: 8px;">
+                💡 萬用字元公式提示卡：=COUNTIF(E:E, "*報到引導*")
+            </div>
+
+            <div class="prompt-label" style="color: var(--crayon-coral-dark);">
+                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-coral);">4</span>
+                範本 4：群組回報與行前通知
+            </div>
+            <div class="prompt-container">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="border-color: var(--crayon-coral);">以下是目前報名統計（貼上統計結果）。請幫我寫：①給團長的 100 字進度回報（含缺人項目）②LINE 群組的缺額徵求文（親切、可愛 emoji、不超過 120 字）③活動前一天的行前提醒（時間、集合地點、穿著）。三則分開輸出。</div>
+            </div>
+        </div>
+
+        <!-- 頁 10：微專題概述 -->
+        <div class="slide-card" id="s10">
+            <h2>📂 分流沙盒：6 大微專題與真實檔案健檢</h2>
+            <div class="grid-2" style="gap: 18px;">
+                <div class="step-row">
+                    <div class="sketch-num" style="color: var(--crayon-blue);">1</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-blue-dark);">意願分組排班</h3>
+                        <p>依志願序與人數下限自動排班表</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="sketch-num" style="color: var(--crayon-coral);">2</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-coral-dark);">LINE 公告多版本改寫</h3>
+                        <p>一次產出公告、前一天與當日提醒</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="sketch-num" style="color: var(--crayon-green);">3</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-green-dark);">會議紀錄整理</h3>
+                        <p>雜亂筆記秒變 3 點決議與待辦分工表</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="sketch-num" style="color: var(--crayon-orange);">4</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-orange-dark);">簽到退核對與時數</h3>
+                        <p>比對未到名單並自動換算服務時數</p>
+                    </div>
+                </div>
+                <div class="step-row">
+                    <div class="sketch-num" style="color: var(--crayon-purple-dark);">5</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-purple-dark);">活動滿意度摘要與感謝文</h3>
+                        <p>整理問卷重點、改進建議與溫馨感謝文</p>
+                    </div>
+                </div>
+                <div class="step-row" style="border-color: var(--crayon-coral);">
+                    <div class="sketch-num" style="color: var(--crayon-coral);">6</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-coral-dark);">目前遇到的困難（一對一教學）</h3>
+                        <p>直接拿手邊卡關的真實團務檔案現場實戰健檢</p>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top: 18px; margin-bottom: 0;">
+                <p style="margin:0; font-size: 1.3rem; font-weight: 900; color: var(--crayon-coral-dark);">
+                    ⚠️ 個資安全提醒：「練習前請先把真實姓名、電話改成代號再貼給 AI！」
+                </p>
+            </div>
+        </div>
+
+        <!-- 頁 11：微專題 01 與 02 -->
+        <div class="slide-card" id="s11">
+            <h2>💡 微專題 01 與 02 實戰提示詞</h2>
+            <div class="prompt-label" style="color: var(--crayon-blue-dark);">
+                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-blue);">1</span>
+                微專題 01：意願分組排班
+            </div>
+            <div class="prompt-container">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box">你是志工團幹部。以下是各組志工的意願調查結果：（貼上資料）請依『每時段至少 3 人、每人最多排 2 個時段、優先尊重志願序』排出班表，以表格輸出（時段／工作項目／人員），並標出缺人時段與調度建議。</div>
+            </div>
+
+            <div class="prompt-label" style="color: var(--crayon-coral-dark);">
+                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-coral);">2</span>
+                微專題 02：LINE 公告多版本改寫
+            </div>
+            <div class="prompt-container">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="border-color: var(--crayon-coral);">請把以下活動資訊改寫成三個版本：①LINE 群組公告（150 字內、重點條列、適量 emoji）②前一天提醒（50 字）③當天早上集合通知（30 字）。活動資訊：（貼上）</div>
+            </div>
+        </div>
+
+        <!-- 頁 12：微專題 03 與 04 -->
+        <div class="slide-card" id="s12">
+            <h2>💡 微專題 03 與 04 實戰提示詞</h2>
+            <div class="prompt-label" style="color: var(--crayon-green-dark);">
+                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-green);">3</span>
+                微專題 03：會議紀錄整理
+            </div>
+            <div class="prompt-container">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="border-color: var(--crayon-green);">以下是會議筆記：（貼上）請整理成：①3 點決議 ②待辦分工表（事項／負責人／期限）③下次會議待討論事項。語氣簡潔，可直接貼進 LINE。</div>
+            </div>
+
+            <div class="prompt-label" style="color: var(--crayon-orange-dark);">
+                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-orange);">4</span>
+                微專題 04：簽到退名單比對與時數
+            </div>
+            <div class="prompt-container">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="border-color: var(--crayon-orange);">名單 A 是報名名單，名單 B 是簽到退紀錄（含簽到、簽退時間）：（貼上，姓名已去識別）請找出：①報名但未到 ②未報名卻到場 ③每人服務時數（以 0.5 小時為單位）。以表格輸出，並標示異常。</div>
+            </div>
+        </div>
+
+        <!-- 頁 13：微專題 05 與微專題 06 (實作練習一對一教學) -->
+        <div class="slide-card" id="s13">
+            <h2>🛠️ 微專題 05 與 微專題 06（現場實戰）</h2>
+            <div class="prompt-label" style="color: var(--crayon-purple-dark); margin-top: 0;">
+                <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: var(--crayon-purple-dark);">5</span>
+                微專題 05：滿意度摘要
+            </div>
+            <div class="prompt-container" style="margin-bottom: 16px;">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="max-height: 110px; border-color: var(--crayon-purple);">以下是問卷回覆：（貼上）請輸出：①整體滿意度 3 句重點 ②優點與待改進各 3 點 ③匿名代表性意見 3 則 ④下次建議行動 ⑤100 字感謝文（可貼 LINE）。</div>
+            </div>
+
+            <div class="prompt-label" style="color: var(--crayon-coral-dark); margin-top: 0;">
+                <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: var(--crayon-coral-dark);">6</span>
+                微專題 06：目前遇到的困難（實作練習一對一教學）
+            </div>
+            <div class="prompt-container" style="margin-bottom: 8px;">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="max-height: 110px; border-color: var(--crayon-coral);">我是國小志工團幹部，目前在處理志工行政時遇到這個實際困難與檔案需求：（貼上已去識別化的問題或表格內容）。請一步一步引導我解決：①先告訴我最推薦用什麼方式處理 ②給我具體步驟或直接可套用的公式/文案。</div>
+            </div>
+            <div style="background: #FFFDF5; border: 2.5px dashed var(--crayon-orange); padding: 10px 18px; border-radius: 14px; text-align: center;">
+                <p style="margin: 0; font-size: 1.15rem; font-weight: 800; color: var(--crayon-orange-dark);">
+                    🙋‍♀️ 現場卡關請直接舉手！講師將帶著您的實際團務檔案進行一對一實作健檢。
+                </p>
+            </div>
+        </div>
+
+        <!-- 頁 14 (獨立頁)：幹部 10 則隨身萬用指令包 -->
+        <div class="slide-card" id="s14">
+            <div>
+                <span class="badge-pill" style="margin-bottom: 8px;">🎁 隨身百寶箱</span>
+                <h2 style="margin-bottom: 10px;">📋 幹部 10 則隨身萬用指令包</h2>
+                <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 10px;">
+                    👇 點擊下方您感興趣的指令標題，上方會即時顯示完整內文，滿意即可一鍵複製：
+                </p>
+            </div>
+
+            <!-- 預覽與複製顯示區 -->
+            <div class="prompt-container" style="margin: 6px 0 14px 0;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span id="previewTitle" style="font-size: 1.22rem; font-weight: 900; color: var(--crayon-coral-dark);">
+                        📌 已選擇：① 通用開場 (ROCE)
+                    </span>
+                    <button class="copy-btn" style="position: static; padding: 8px 22px; font-size: 1.05rem;" onclick="copyPreviewCmd(this)">📋 複製此指令</button>
+                </div>
+                <div class="prompt-box" id="cmdPreviewBox" style="max-height: 140px; border-color: var(--crayon-coral); font-weight: 700; color: #1E293B;">你是國小志工團幹部，請幫我 [任務]，對象是 [對象]，語氣溫柔親切。</div>
+            </div>
+
+            <!-- 指令選項按鈕群 (點擊切換顯示) -->
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;" id="cmdTabContainer">
+                <button class="cmd-tab-btn active" onclick="selectCmd(0, this)">① 通用開場 (ROCE) <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(1, this)">② 公告改寫 <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(2, this)">③ 會議整理 <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(3, this)">④ 名單比對 <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(4, this)">⑤ 公式幫手 <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(5, this)">⑥ 感謝文 <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(6, this)">⑦ 溫柔催填 <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(7, this)">⑧ 活動檢核 <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(8, this)">⑨ 截圖轉 Excel 檔案 <span>👉</span></button>
+                <button class="cmd-tab-btn" onclick="selectCmd(9, this)">⑩ 引導式提問 <span>👉</span></button>
+            </div>
+        </div>
+
+        <!-- 頁 15：四查口訣、生圖查錯字與個資提醒 -->
+        <div class="slide-card" id="s15">
+            <h2>🛡️ 四查口訣、生圖查錯字與個資防護</h2>
+            <div class="card-item orange" style="margin-bottom: 14px; background: #FFFDF5;">
+                <p style="margin: 0; font-weight: 900; font-size: 1.4rem; color: var(--crayon-orange-dark);">
+                    ✨ 四查口訣：一查人數、二查日期時間、三查有無編造、四查有無錯別字
+                </p>
+            </div>
+
+            <div class="card-item coral" style="margin-bottom: 14px; background: #FFF8F8;">
+                <p style="margin: 0; font-weight: 900; font-size: 1.28rem; color: var(--crayon-coral-dark);">
+                    🎨 AI 生圖與產出查錯字叮嚀：目前 AI 生圖容易出現錯別字或怪字，仍需人工篩檢！請大家運用時不要忘記<strong>先請 AI 自己核對檢查有沒有錯字再產出</strong>。
+                </p>
+            </div>
+
+            <div class="card-item purple" style="margin-bottom: 14px; background: #FAF9FE;">
+                <p style="margin:0; font-weight: 900; font-size: 1.28rem; color: var(--crayon-purple-dark);">
+                    🔒 個資防護提醒：貼給 AI 前先把姓名、電話、LINE ID 改成代號，孩子資料絕對不要貼！
+                </p>
+            </div>
+
+            <div class="prompt-label" style="color: var(--crayon-blue-dark); margin-top: 4px;">
+                🔍 請 AI 先自我核對防錯字指令（產出前必貼）：
+            </div>
+            <div class="prompt-container" style="margin-top: 6px;">
+                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
+                <div class="prompt-box" style="max-height: 130px;">請先自己核對檢查內容與圖片上的每一個字：①確認完全沒有錯別字、漏字或壞字 ②人數加總是否正確 ③日期時間有沒有前後不一致 ④有沒有任何內容不是來自我提供的資料。確認檢查無誤後再產出給我！</div>
+            </div>
+        </div>
+
+        <!-- 頁 16：卡關急救包 -->
+        <div class="slide-card" id="s16">
+            <h2>🛟 卡關急救包（遇到問題這樣問 AI）</h2>
+            <div class="grid-2" style="gap: 20px;">
+                <div class="card-item coral">
+                    <h3 style="color: var(--crayon-coral-dark);">❌ 出現錯誤訊息</h3>
+                    <p style="margin:0;">整段貼回去問：「這段訊息是什麼意思？怎麼修正？」</p>
+                </div>
+                <div class="card-item blue">
+                    <h3 style="color: var(--crayon-blue-dark);">❓ 看不懂專業術語</h3>
+                    <p style="margin:0;">「用國小生聽得懂的方式再說一次，不要用艱澀術語。」</p>
+                </div>
+                <div class="card-item green">
+                    <h3 style="color: var(--crayon-green-dark);">🚶 不會實際操作</h3>
+                    <p style="margin:0;">「一步一步帶我做，每次只給一個步驟，等我做完再往下。」</p>
+                </div>
+                <div class="card-item orange">
+                    <h3 style="color: var(--crayon-orange-dark);">🔄 答案不對或鬼打牆</h3>
+                    <p style="margin:0;">補上缺少的 ROCE（角色、任務、條件、格式）再問一次。</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 22px; background: #FFF; padding: 16px; border-radius: 20px; border: 2.5px dashed var(--crayon-purple);">
+                <p style="margin: 0; font-size: 1.35rem; font-weight: 900; color: var(--crayon-purple-dark);">
+                    💡 終極大絕招：還是鬼打牆就「開新對話」，用 ROCE 重新講一次需求！
+                </p>
+            </div>
+        </div>
+
+        <!-- 頁 17：結語 -->
+        <div class="slide-card" id="s17">
+            <div style="text-align: center; padding: 10px 0;">
+                <span class="badge-pill" style="font-size: 1.35rem; padding: 10px 28px;">🎉 動手實作，解放雙手！</span>
+                <div class="crayon-banner-title" style="margin: 14px 0;">
+                    <span class="crayon-char c-green">自</span>
+                    <span class="crayon-char c-orange">由</span>
+                    <span class="crayon-char c-coral">實</span>
+                    <span class="crayon-char c-blue">作</span>
+                    <span class="crayon-char c-purple">與</span>
+                    <span class="crayon-char c-pink">交</span>
+                    <span class="crayon-char c-green">流</span>
+                </div>
+                <div class="process-horizontal" style="margin-top: 20px;">
+                    <div class="process-step">
+                        <div class="sketch-num" style="color: var(--crayon-blue);">1</div>
+                        <h3 style="color: var(--crayon-blue-dark);">卡關就舉手 🙋‍♀️</h3>
+                        <p>現場一對一排除問題</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="sketch-num" style="color: var(--crayon-coral);">2</div>
+                        <h3 style="color: var(--crayon-coral-dark);">真實檔案健檢 📂</h3>
+                        <p>把去識別化的團務表單拿出來試</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="sketch-num" style="color: var(--crayon-green);">3</div>
+                        <h3 style="color: var(--crayon-green-dark);">帶走指令包 🚀</h3>
+                        <p>回團立刻用，行政效率翻倍</p>
+                    </div>
+                </div>
+            </div>
+            <div style="background: #FFFFFF; border: 3px solid var(--crayon-blue); padding: 20px; border-radius: 22px; text-align: center; margin-top: 12px;">
+                <p style="margin: 0; font-weight: 900; font-size: 1.4rem; color: var(--crayon-blue-dark);">
+                    🌟 祝各位志工團夥伴們工作愉快，輕鬆完成每項精彩活動！
+                </p>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <button class="nav-btn" id="prevBtn" onclick="changePage(-1)">👈 上一頁</button>
+
+        <!-- 課程計時器：小人物跑進度 -->
+        <div class="timer-wrap">
+            <div class="timer-info">
+                <div class="timer-clock" id="timerClock">00:00:00</div>
+                <div class="timer-controls">
+                    <button class="timer-ctrl-btn" id="timerPauseBtn" onclick="toggleTimer()">⏸ 暫停</button>
+                    <button class="timer-ctrl-btn" onclick="resetTimer()">↺ 重設</button>
+                </div>
+            </div>
+            <div class="timer-track-area">
+                <div class="timer-hint" id="timerHint">按「下一頁」開始計時 ⏱️</div>
+                <div class="timer-runner" id="timerRunner"><span class="timer-runner-inner">🐈‍⬛</span></div>
+                <div class="timer-track" id="timerTrack">
+                    <div class="timer-seg" style="flex: 20;">
+                        <div class="timer-seg-fill" style="background-color: var(--crayon-blue);"></div>
+                        <div class="timer-seg-label">① 暖身 0:00</div>
+                    </div>
+                    <div class="timer-seg" style="flex: 45;">
+                        <div class="timer-seg-fill" style="background-color: var(--crayon-coral);"></div>
+                        <div class="timer-seg-label">② 主專題 0:20</div>
+                    </div>
+                    <div class="timer-seg" style="flex: 45;">
+                        <div class="timer-seg-fill" style="background-color: var(--crayon-green);"></div>
+                        <div class="timer-seg-label">③ 分流沙盒 1:05</div>
+                    </div>
+                    <div class="timer-seg" style="flex: 10;">
+                        <div class="timer-seg-fill" style="background-color: var(--crayon-orange);"></div>
+                        <div class="timer-seg-label">④ 交流</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button class="nav-btn" id="nextBtn" onclick="changePage(1)">下一頁 👉</button>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const totalSlides = 17;
+        let currentSlide = 1;
+
+        function getSlideFromHash() {
+            const hash = window.location.hash;
+            const match = hash.match(/#s(\d+)/);
+            if (match) {
+                const page = parseInt(match[1], 10);
+                if (page >= 1 && page <= totalSlides) {
+                    return page;
+                }
+            }
+            return 1;
+        }
+
+        function showSlide(n) {
+            if (n < 1) n = 1;
+            if (n > totalSlides) n = totalSlides;
+            currentSlide = n;
+
+            history.replaceState(null, null, `#s${currentSlide}`);
+
+            for (let i = 1; i <= totalSlides; i++) {
+                const card = document.getElementById(`s${i}`);
+                if (card) {
+                    if (i === currentSlide) {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                }
+            }
+
+            document.getElementById('pageIndicator').innerText = `第 ${currentSlide} 頁 / 共 ${totalSlides} 頁`;
+            document.getElementById('prevBtn').disabled = (currentSlide === 1);
+            document.getElementById('nextBtn').disabled = (currentSlide === totalSlides);
+        }
+
+        function changePage(direction) {
+            // 第一次往下一頁時自動開始計時
+            if (direction > 0 && !timerStarted) {
+                startTimer();
+            }
+            showSlide(currentSlide + direction);
+        }
+
+        // ===== 課程計時器（小人物跑進度） =====
+        const COURSE_TOTAL_MIN = 120;
+        // 四段課程：開始分鐘、長度（分鐘），對應第 2 頁課程流程
+        const COURSE_SEGMENTS = [
+            { start: 0,   dur: 20 },  // ① 工具定位與心法暖身
+            { start: 20,  dur: 45 },  // ② 主專題實作
+            { start: 65,  dur: 45 },  // ③ 分流沙盒
+            { start: 110, dur: 10 }   // ④ 成果交流
+        ];
+
+        let timerStarted = false;
+        let timerRunning = false;
+        let timerAccumMs = 0;      // 暫停前累積的時間
+        let timerStartStamp = 0;   // 本次開始的時間戳
+        let timerInterval = null;
+
+        function getElapsedMs() {
+            return timerAccumMs + (timerRunning ? Date.now() - timerStartStamp : 0);
+        }
+
+        function startTimer() {
+            timerStarted = true;
+            timerRunning = true;
+            timerStartStamp = Date.now();
+            document.getElementById('timerHint').style.display = 'none';
+            document.getElementById('timerRunner').classList.add('running');
+            document.getElementById('timerPauseBtn').innerText = '⏸ 暫停';
+            clearInterval(timerInterval);
+            timerInterval = setInterval(renderTimer, 1000);
+            renderTimer();
+        }
+
+        function toggleTimer() {
+            if (!timerStarted) {
+                startTimer();
+                return;
+            }
+            const runner = document.getElementById('timerRunner');
+            const btn = document.getElementById('timerPauseBtn');
+            if (timerRunning) {
+                timerAccumMs = getElapsedMs();
+                timerRunning = false;
+                runner.classList.remove('running');
+                btn.innerText = '▶ 繼續';
+            } else {
+                timerStartStamp = Date.now();
+                timerRunning = true;
+                runner.classList.add('running');
+                btn.innerText = '⏸ 暫停';
+            }
+            renderTimer();
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            timerStarted = false;
+            timerRunning = false;
+            timerAccumMs = 0;
+            document.getElementById('timerHint').style.display = '';
+            document.getElementById('timerRunner').classList.remove('running');
+            document.getElementById('timerPauseBtn').innerText = '⏸ 暫停';
+            renderTimer();
+        }
+
+        function pad2(n) {
+            return String(n).padStart(2, '0');
+        }
+
+        function renderTimer() {
+            const totalSec = Math.floor(getElapsedMs() / 1000);
+            const h = Math.floor(totalSec / 3600);
+            const m = Math.floor((totalSec % 3600) / 60);
+            const s = totalSec % 60;
+
+            const clock = document.getElementById('timerClock');
+            clock.innerText = `${pad2(h)}:${pad2(m)}:${pad2(s)}`;
+
+            const elapsedMin = totalSec / 60;
+            clock.classList.toggle('overtime', elapsedMin >= COURSE_TOTAL_MIN);
+
+            // 小人物位置
+            const pct = Math.min(elapsedMin / COURSE_TOTAL_MIN, 1) * 100;
+            document.getElementById('timerRunner').style.left = pct + '%';
+
+            // 四格色塊填色（未讀取到的維持灰階）
+            const segs = document.querySelectorAll('#timerTrack .timer-seg');
+            COURSE_SEGMENTS.forEach((seg, i) => {
+                const ratio = Math.max(0, Math.min((elapsedMin - seg.start) / seg.dur, 1));
+                segs[i].querySelector('.timer-seg-fill').style.width = (ratio * 100) + '%';
+                segs[i].classList.toggle('reached', timerStarted && elapsedMin >= seg.start);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                changePage(-1);
+            } else if (e.key === 'ArrowRight') {
+                changePage(1);
+            }
+        });
+
+        function copyText(buttonElement) {
+            const promptBox = buttonElement.nextElementSibling;
+            const textToCopy = promptBox.innerText;
+
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showCopiedFeedback(buttonElement);
+                }).catch(() => {
+                    fallbackCopyText(textToCopy, buttonElement);
+                });
+            } else {
+                fallbackCopyText(textToCopy, buttonElement);
+            }
+        }
+
+        function copyDirectText(buttonElement, textToCopy) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    showCopiedFeedback(buttonElement);
+                }).catch(() => {
+                    fallbackCopyText(textToCopy, buttonElement);
+                });
+            } else {
+                fallbackCopyText(textToCopy, buttonElement);
+            }
+        }
+
+        function fallbackCopyText(text, buttonElement) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            document.body.appendChild(textarea);
+            textarea.focus();
+            textarea.select();
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopiedFeedback(buttonElement);
+                } else {
+                    alert('複製失敗，請手動複製文字');
+                }
+            } catch (err) {
+                alert('複製失敗，請手動複製文字');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function showCopiedFeedback(btn) {
+            const originalText = btn.innerText;
+            btn.innerText = '✓ 已複製';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.classList.remove('copied');
+            }, 1500);
+        }
+
+        // 幹部 10 則指令切換與預覽邏輯
+        const cmdData = [
+            {
+                title: "① 通用開場 (ROCE)",
+                text: "你是國小志工團幹部，請幫我 [任務]，對象是 [對象]，語氣溫柔親切。"
+            },
+            {
+                title: "② 公告改寫",
+                text: "請將以下內容精簡為 100 字內的 LINE 友善公告，條列重點並加上合適 emoji："
+            },
+            {
+                title: "③ 會議整理",
+                text: "請將以下逐字稿整理成 3 點重要決議與待辦事項清單："
+            },
+            {
+                title: "④ 名單比對",
+                text: "請幫我比對以下兩份名單，找出未到人員與異常狀況："
+            },
+            {
+                title: "⑤ 公式幫手",
+                text: "我的 Google 試算表欄位是 [欄位]，請給我可以用的 COUNTIF 或 VLOOKUP 公式："
+            },
+            {
+                title: "⑥ 感謝文",
+                text: "請寫一段 80 字溫馨感人的志工感謝文，適合發在群組："
+            },
+            {
+                title: "⑦ 溫柔催填",
+                text: "請寫一則溫柔可愛的提醒訊息，請還沒填寫表單的志工夥伴抽空完成："
+            },
+            {
+                title: "⑧ 活動檢核",
+                text: "請為 [活動名稱] 列出包含前一天、當天早上的完整幹部檢查清單："
+            },
+            {
+                title: "⑨ 截圖轉 Excel 檔案",
+                text: "這是一個截圖,請幫我轉為excel檔案讓我可以下載"
+            },
+            {
+                title: "⑩ 引導式提問",
+                text: "我想做 [主題] 但不知道怎麼開始，請先問我 5 個問題，再給我步驟。"
+            }
+        ];
+
+        let selectedCmdIndex = 0;
+
+        function selectCmd(index, btnElement) {
+            selectedCmdIndex = index;
+            // 切換按鈕 active 樣式
+            const allBtns = document.querySelectorAll('.cmd-tab-btn');
+            allBtns.forEach(b => b.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+
+            // 更新預覽標題與內文
+            const item = cmdData[index];
+            document.getElementById('previewTitle').innerText = `📌 已選擇：${item.title}`;
+            document.getElementById('cmdPreviewBox').innerText = item.text;
+        }
+
+        function copyPreviewCmd(btnElement) {
+            const textToCopy = cmdData[selectedCmdIndex].text;
+            copyDirectText(btnElement, textToCopy);
+        }
+
+        window.addEventListener('hashchange', () => {
+            const target = getSlideFromHash();
+            if (target !== currentSlide) {
+                showSlide(target);
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const initial = getSlideFromHash();
+            showSlide(initial);
+        });
+    </script>
+</body>
+</html>
