@@ -659,17 +659,21 @@
             .timer-seg-label { font-size: 0.75rem; }
         }
 
-        /* 底部導覽列 */
+        /* 底部導覽列 - 固定吸底，支援 safe-area */
         footer {
-            padding: 16px 24px;
-            background: rgba(252, 251, 247, 0.88);
-            border-top: 2px dashed rgba(181, 171, 216, 0.45);
+            padding: 12px 24px calc(12px + env(safe-area-inset-bottom, 0px)) 24px;
+            background: rgba(252, 251, 247, 0.96);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 2px dashed rgba(181, 171, 216, 0.55);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 28px;
-            position: relative;
+            gap: 20px;
+            position: sticky;
+            bottom: 0;
             z-index: 100;
+            box-shadow: 0 -4px 16px rgba(47, 46, 44, 0.05);
         }
 
         .nav-btn {
@@ -701,26 +705,28 @@
             box-shadow: none;
         }
 
-        /* 響應式支援 */
         @media (max-width: 1024px) {
             .split-work-layout {
                 grid-template-columns: 1fr;
-                gap: 24px;
+                gap: 20px;
             }
             .work-2x2-box {
                 display: flex;
                 justify-content: center;
-                gap: 20px;
+                gap: 16px;
+                padding: 4px;
             }
             .work-big-letter {
-                font-size: 4rem;
+                font-size: 3.6rem;
             }
             .process-horizontal {
                 flex-direction: column;
+                gap: 12px;
             }
             .process-arrow {
                 transform: rotate(90deg);
-                margin: 0;
+                margin: 4px auto;
+                font-size: 1.8rem;
             }
             .slide-card {
                 padding: 28px 24px;
@@ -728,6 +734,282 @@
             }
             .grid-2 {
                 grid-template-columns: 1fr;
+            }
+            .timer-wrap {
+                max-width: 100%;
+            }
+        }
+
+        /* 平板版面優化 (769px ~ 1024px) */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            header {
+                padding: 12px 24px;
+            }
+            .logo-area {
+                font-size: 1.25rem;
+            }
+            .page-indicator {
+                font-size: 1rem;
+                padding: 6px 16px;
+            }
+            .main-container {
+                width: 96%;
+                padding: 8px 16px;
+                margin: 10px auto;
+            }
+            .slide-card {
+                padding: 32px 36px;
+                border-radius: 26px;
+            }
+            h1 { font-size: 2.3rem; }
+            h2 { font-size: 1.85rem; }
+            p, li { font-size: 1.18rem; }
+            .badge-pill { font-size: 1.05rem; padding: 6px 16px; }
+            .prompt-box { font-size: 1.08rem; max-height: 190px; }
+            .step-row { padding: 14px 18px; gap: 16px; }
+            .sketch-num { width: 58px; height: 58px; min-width: 58px; font-size: 1.8rem; }
+            .nav-btn {
+                font-size: 1.1rem;
+                padding: 9px 24px;
+            }
+            footer {
+                gap: 16px;
+                padding: 10px 18px calc(10px + env(safe-area-inset-bottom, 0px)) 18px;
+            }
+        }
+
+        /* 手機版面全面重整 (< 768px) */
+        @media (max-width: 768px) {
+            /* 隱藏過度分散焦點的手繪裝飾 */
+            .doodle-bg {
+                opacity: 0.35;
+            }
+
+            /* Header 緊湊排版 */
+            header {
+                padding: 10px 14px;
+            }
+            .logo-area {
+                font-size: 1.05rem;
+                gap: 6px;
+            }
+            .logo-dots span {
+                width: 8px;
+                height: 8px;
+            }
+            .page-indicator {
+                font-size: 0.88rem;
+                padding: 5px 12px;
+                border-width: 2px;
+            }
+
+            /* Main 容器貼合螢幕，保留滑動緩衝 */
+            .main-container {
+                width: 100%;
+                padding: 6px 10px 16px 10px;
+                margin: 6px auto;
+            }
+
+            .slide-card {
+                padding: 20px 14px;
+                border-radius: 20px;
+                border-width: 2.5px;
+                min-height: auto;
+                box-shadow: 0 6px 20px rgba(80, 70, 60, 0.05);
+            }
+
+            /* 標題與字級全面針對手機縮放 */
+            .crayon-banner-title {
+                gap: 4px;
+                margin-bottom: 14px;
+            }
+            .crayon-char {
+                font-size: 1.8rem;
+                padding: 3px 8px;
+                border-radius: 10px;
+                letter-spacing: 1px;
+                -webkit-text-stroke-width: 1.5px;
+            }
+            h1 {
+                font-size: 1.65rem;
+                line-height: 1.35;
+                margin-bottom: 12px;
+            }
+            h2 {
+                font-size: 1.35rem;
+                line-height: 1.4;
+                margin-bottom: 14px;
+                gap: 8px;
+            }
+            p, li {
+                font-size: 1.05rem;
+                line-height: 1.65;
+                margin-bottom: 8px;
+            }
+            .badge-pill {
+                font-size: 0.88rem;
+                padding: 5px 12px;
+                margin-bottom: 12px;
+            }
+
+            /* 步驟列表手機卡片化 */
+            .step-list-vertical {
+                gap: 12px;
+            }
+            .step-row {
+                padding: 12px 14px;
+                gap: 12px;
+                border-radius: 16px;
+            }
+            .sketch-num {
+                width: 44px;
+                height: 44px;
+                min-width: 44px;
+                font-size: 1.35rem;
+                border-width: 2.5px;
+            }
+            .sketch-num::after {
+                inset: -3px;
+                border-width: 1.5px;
+            }
+            .step-row-content h3 {
+                font-size: 1.18rem;
+            }
+            .step-row-content p {
+                font-size: 0.98rem;
+            }
+
+            /* 橫向步驟在手機垂直堆疊 */
+            .process-step {
+                padding: 14px 12px;
+                border-radius: 18px;
+            }
+            .process-step h3 {
+                font-size: 1.15rem;
+                margin: 8px 0 4px 0;
+            }
+            .process-step p {
+                font-size: 0.95rem;
+            }
+            .process-arrow {
+                font-size: 1.4rem;
+                margin: 2px auto;
+            }
+
+            /* 提示詞與複製按鈕 */
+            .prompt-label {
+                font-size: 1.05rem;
+                margin: 6px 0 4px 0;
+                gap: 6px;
+            }
+            .prompt-container {
+                margin: 8px 0 12px 0;
+            }
+            .prompt-box {
+                padding: 14px 14px 44px 14px; /* 底部留白給手機複製按鈕 */
+                font-size: 0.95rem;
+                line-height: 1.6;
+                border-radius: 16px;
+                max-height: 170px;
+                border-width: 2px;
+            }
+            .copy-btn {
+                top: auto;
+                bottom: 8px;
+                right: 8px;
+                padding: 6px 14px;
+                font-size: 0.88rem;
+                border-radius: 20px;
+            }
+
+            /* 指令包按鈕網格在手機改單欄 */
+            #cmdGrid {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+            #cmdTabContainer {
+                grid-template-columns: 1fr !important;
+                gap: 6px !important;
+            }
+            .cmd-tab-btn {
+                font-size: 0.95rem;
+                padding: 9px 12px;
+            }
+
+            /* 卡片與提醒區塊 */
+            .card-item {
+                padding: 14px 14px;
+                border-radius: 16px;
+            }
+            .card-item h3 {
+                font-size: 1.15rem;
+            }
+            .highlight-box {
+                padding: 12px 14px;
+                font-size: 0.98rem;
+                border-left-width: 6px;
+                border-radius: 14px;
+            }
+
+            /* 手機版 Footer 控制列重整：計時器與換頁按鈕清晰分離 */
+            footer {
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px 12px calc(10px + env(safe-area-inset-bottom, 0px)) 12px;
+            }
+            .timer-wrap {
+                width: 100%;
+                gap: 8px;
+            }
+            .timer-info {
+                min-width: 86px;
+            }
+            .timer-clock {
+                font-size: 1rem;
+                padding: 2px 8px;
+            }
+            .timer-ctrl-btn {
+                font-size: 0.75rem;
+                padding: 1px 6px;
+            }
+            .timer-track-area {
+                padding-top: 26px;
+            }
+            .timer-runner {
+                font-size: 1.45rem;
+            }
+            .timer-track {
+                height: 22px;
+            }
+            .timer-seg-label {
+                font-size: 0.68rem;
+            }
+            .timer-hint {
+                font-size: 0.78rem;
+                top: 3px;
+            }
+
+            /* 讓手機上的上一頁與下一頁按鈕並排且超好點擊 */
+            .nav-btn {
+                font-size: 1.05rem;
+                padding: 10px 0;
+                width: 48%;
+                justify-content: center;
+                border-width: 2.5px;
+            }
+            /* 手機版將兩顆換頁按鈕放入同一排容器呈現 */
+            footer {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+            .timer-wrap {
+                grid-column: span 2;
+            }
+            #prevBtn {
+                width: 100%;
+            }
+            #nextBtn {
+                width: 100%;
             }
         }
     </style>
