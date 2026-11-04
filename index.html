@@ -757,6 +757,88 @@
             margin-bottom: 3px;
         }
 
+        /* 吸睛案例小品卡片樣式 */
+        .case-edu-card {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 20px 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+            border: 3px solid;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .case-edu-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+        .case-edu-card.c-purple {
+            border-color: var(--crayon-purple);
+            background: linear-gradient(180deg, #FAF7FF 0%, #FFFFFF 100%);
+        }
+        .case-edu-card.c-blue {
+            border-color: var(--crayon-blue);
+            background: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%);
+        }
+        .case-edu-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.92rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            width: fit-content;
+        }
+        .case-edu-title {
+            font-size: 1.32rem;
+            font-weight: 900;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        .case-edu-desc {
+            font-size: 1.05rem;
+            line-height: 1.65;
+            color: #4B5563;
+            margin-bottom: 12px;
+        }
+        .case-edu-quote {
+            background: rgba(255, 255, 255, 0.85);
+            border-left: 3.5px solid currentColor;
+            padding: 8px 12px;
+            border-radius: 10px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+        .case-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 50px;
+            font-size: 1.02rem;
+            font-weight: 900;
+            text-decoration: none;
+            color: #FFFFFF;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .case-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.16);
+            filter: brightness(1.05);
+        }
+        .btn-purple {
+            background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+        }
+        .btn-blue {
+            background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+        }
+
         .card-item {
             background: #FFFFFF;
             border: 3px solid var(--crayon-blue);
@@ -1285,6 +1367,25 @@
                 flex-direction: row;
             }
 
+            /* 吸睛案例手機適配 */
+            .case-edu-card {
+                padding: 14px 16px;
+                border-radius: 18px;
+            }
+            .case-edu-title {
+                font-size: 1.15rem;
+            }
+            .case-edu-desc {
+                font-size: 0.95rem;
+            }
+            .case-edu-quote {
+                font-size: 0.9rem;
+            }
+            .case-link-btn {
+                font-size: 0.92rem;
+                padding: 8px 14px;
+            }
+
             /* 卡片與提醒區塊 */
             .card-item {
                 padding: 14px 14px;
@@ -1424,7 +1525,7 @@
             </div>
             AI 協作文書與表單統計工作坊
         </div>
-        <div class="page-indicator" id="pageIndicator">第 1 頁 / 共 19 頁</div>
+        <div class="page-indicator" id="pageIndicator">第 1 頁 / 共 20 頁</div>
     </header>
 
     <!-- Main Slide Deck Container -->
@@ -1455,8 +1556,71 @@
             </div>
         </div>
 
-        <!-- 頁 2：流程 -->
+        <!-- 頁 2：課間輕鬆小品 / 吸睛案例分享（Threads 熱議） -->
         <div class="slide-card" id="s2">
+            <div>
+                <span class="badge-pill" style="margin-bottom: 10px;">🔥 Threads 熱搜話題・課間吸睛小品</span>
+                <h2 style="margin-bottom: 8px;">🎒 不只做文書！爸媽用 AI 破解育兒與學習痛點</h2>
+                <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 14px;">
+                    不用寫一行程式碼！只要把生活痛點說清楚，AI 就能幫你客製出專屬的教育與學習神器：
+                </p>
+            </div>
+
+            <div class="grid-2" style="gap: 18px; margin: 10px 0;">
+                <!-- 案例一 -->
+                <div class="case-edu-card c-purple">
+                    <div>
+                        <div class="case-edu-badge" style="background: #EDE9FE; color: #5B21B6;">
+                            <span>📖</span> 課業輔導與弱點突破
+                        </div>
+                        <h3 class="case-edu-title" style="color: #4C1D95;">
+                            案例一：把考卷丟給 Claude 當 24 小時成績顧問與客製單字遊戲
+                        </h3>
+                        <p class="case-edu-desc">
+                            女兒考試遇到瓶頸，家長直接把<strong>整份考卷拍照丟給 Claude</strong> 做精準的弱點分析與複習規劃。針對孩子老是背不熟的英文單字，AI 更直接<strong>量身打造專屬的線上互動測驗網頁</strong>，讓孩子邊玩邊複習！
+                        </p>
+                        <div class="case-edu-quote" style="border-color: #8B5CF6; color: #5B21B6;">
+                            💡 <strong>痛點破解：</strong>把死板考卷變成客製化闖關題庫，再也不用陪讀到理智線斷裂！
+                        </div>
+                    </div>
+                    <a href="https://ai.kidsworkbook.app" target="_blank" rel="noopener noreferrer" class="case-link-btn btn-purple">
+                        <span>📱 點擊體驗：童樂習網頁 (ai.kidsworkbook.app)</span>
+                        <span style="font-size: 1.1rem;">↗</span>
+                    </a>
+                </div>
+
+                <!-- 案例二 -->
+                <div class="case-edu-card c-blue">
+                    <div>
+                        <div class="case-edu-badge" style="background: #E0F2FE; color: #0369A1;">
+                            <span>🎮</span> 遊戲化學習神器
+                        </div>
+                        <h3 class="case-edu-title" style="color: #0C4A6E;">
+                            案例二：把社會自然科目刻成「時空冒險樂園」遊戲網站
+                        </h3>
+                        <p class="case-edu-desc">
+                            面對不想死背書的小孩，熱血爸爸用 Claude <strong>親手刻出專屬的小五社會、自然、國小英文互動遊戲「時空冒險樂園」</strong>。將枯燥的課本知識轉化成解謎過關冒險，瞬間點燃孩子的自主學習熱情！
+                        </p>
+                        <div class="case-edu-quote" style="border-color: #0284C7; color: #0369A1;">
+                            💡 <strong>痛點破解：</strong>不用懂軟體工程，跟 AI 聊出專屬遊戲，讓孩子的「抗拒」變「沉浸」！
+                        </div>
+                    </div>
+                    <a href="https://timepark.ciyulab.com" target="_blank" rel="noopener noreferrer" class="case-link-btn btn-blue">
+                        <span>🚀 點擊體驗：時空冒險樂園 (timepark.ciyulab.com)</span>
+                        <span style="font-size: 1.1rem;">↗</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 14px; margin-bottom: 0; text-align: center; background: #FFFDF5; border-color: var(--crayon-coral);">
+                <p style="margin: 0; font-size: 1.25rem; font-weight: 900; color: var(--crayon-coral-dark);">
+                    ✨ 「AI 不是工程師的專利，而是所有懂痛點、有想法的家長與志工幹部的超級魔法手！」
+                </p>
+            </div>
+        </div>
+
+        <!-- 頁 3：流程 -->
+        <div class="slide-card" id="s3">
             <div class="split-work-layout">
                 <div>
                     <div class="work-2x2-box">
@@ -1500,8 +1664,8 @@
             </div>
         </div>
 
-        <!-- 頁 3 (新增)：我常用的 AI 工具 -->
-        <div class="slide-card" id="s3">
+        <!-- 頁 4 (新增)：我常用的 AI 工具 -->
+        <div class="slide-card" id="s4">
             <div>
                 <span class="badge-pill" style="margin-bottom: 12px;">🛠️ 工欲善其事，必先利其器</span>
                 <h2 style="margin-bottom: 16px;">🤖 我常用的 AI 工具組合心法</h2>
@@ -1550,8 +1714,8 @@
             </div>
         </div>
 
-        <!-- 頁 4：心法 指令四要素（OpenAI 官方架構） -->
-        <div class="slide-card" id="s4">
+        <!-- 頁 5：心法 指令四要素（OpenAI 官方架構） -->
+        <div class="slide-card" id="s5">
             <div style="text-align: center; margin-bottom: 12px;">
                 <span class="badge-pill">OpenAI 官方工作簡報心法</span>
                 <h2 style="justify-content: center; font-size: 2.2rem; margin-bottom: 6px;">🎯 指令四要素：目標・背景・輸出・邊界</h2>
@@ -1631,8 +1795,8 @@
             </div>
         </div>
 
-        <!-- 頁 5：主專題概述 -->
-        <div class="slide-card" id="s5">
+        <!-- 頁 6：主專題概述 -->
+        <div class="slide-card" id="s6">
             <div style="text-align: center;">
                 <span class="badge-pill">活動時間：11/28 六 08:00–15:00</span>
                 <h2 style="justify-content: center; font-size: 2.4rem;">🏆 主專題概述：體表會志工招募與統計</h2>
@@ -1668,8 +1832,8 @@
             </div>
         </div>
 
-        <!-- 頁 6：實作一指令拆解教學 -->
-        <div class="slide-card" id="s6">
+        <!-- 頁 7：實作一指令拆解教學 -->
+        <div class="slide-card" id="s7">
             <h2 style="margin-bottom: 12px;">🔍 實作一指令大拆解：這段文字指令是怎麼一步步寫出來的？</h2>
             <p style="font-size: 1.18rem; color: var(--text-muted); margin-bottom: 10px;">
                 看起來很長不用怕！其實就是運用<strong>「目標・背景・輸出・邊界」</strong>四要素，照順序拼起來（顏色對應下方 4 步驟）：
@@ -1711,8 +1875,8 @@
             </div>
         </div>
 
-        <!-- 頁 7：範本 1 與 2 -->
-        <div class="slide-card" id="s7">
+        <!-- 頁 8：範本 1 與 2 -->
+        <div class="slide-card" id="s8">
             <h2>📝 實作範本 1 與 2（點擊右側按鈕直接複製）</h2>
             <div class="prompt-label" style="color: var(--crayon-blue-dark);">
                 <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-blue);">1</span>
@@ -1733,8 +1897,8 @@
             </div>
         </div>
 
-        <!-- 頁 8：一鍵自動生成表單魔法（Google Apps Script 版） -->
-        <div class="slide-card" id="s8">
+        <!-- 頁 9：一鍵自動生成表單魔法（Google Apps Script 版） -->
+        <div class="slide-card" id="s9">
             <div>
                 <span class="badge-pill" style="margin-bottom: 10px;">⚡ 連表單都不用自己拉！30 秒自動生出整個 Google 表單</span>
                 <h2 style="margin-bottom: 12px;">🪄 一鍵自動生成表單魔法（Google Apps Script 版）</h2>
@@ -1782,8 +1946,8 @@
             </div>
         </div>
 
-        <!-- 頁 9：範本 3 與 4 -->
-        <div class="slide-card" id="s9">
+        <!-- 頁 10：範本 3 與 4 -->
+        <div class="slide-card" id="s10">
             <h2>📊 實作範本 3 與 4（試算表統計與回報）</h2>
             <div class="prompt-label" style="color: var(--crayon-green-dark);">
                 <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-green);">3</span>
@@ -1807,8 +1971,8 @@
             </div>
         </div>
 
-        <!-- 頁 10：進階案例一｜胡適國小志工團時數上傳系統 -->
-        <div class="slide-card" id="s10">
+        <!-- 頁 11：進階案例一｜胡適國小志工團時數上傳系統 -->
+        <div class="slide-card" id="s11">
             <div>
                 <span class="badge-pill">🚀 進階實戰揭秘：用同一套四要素，還能做出什麼？</span>
                 <h2 style="margin-bottom: 6px;">⏱️ 進階案例一｜胡適國小志工團時數上傳系統</h2>
@@ -1896,8 +2060,8 @@
             </div>
         </div>
 
-        <!-- 頁 11：進階案例二｜入校打卡 QR Code 製作應用 -->
-        <div class="slide-card" id="s11">
+        <!-- 頁 12：進階案例二｜入校打卡 QR Code 製作應用 -->
+        <div class="slide-card" id="s12">
             <div>
                 <span class="badge-pill">🚀 進階實戰揭秘：用同一套四要素，還能做出什麼？</span>
                 <h2 style="margin-bottom: 6px;">📲 進階案例二｜入校打卡 QR Code 製作應用</h2>
@@ -1985,8 +2149,8 @@
             </div>
         </div>
 
-        <!-- 頁 12：進階案例三｜志工團迎新報名網站與破冰互動遊戲 -->
-        <div class="slide-card" id="s12">
+        <!-- 頁 13：進階案例三｜志工團迎新報名網站與破冰互動遊戲 -->
+        <div class="slide-card" id="s13">
             <div>
                 <span class="badge-pill">🚀 進階實戰揭秘：用同一套四要素，還能做出什麼？</span>
                 <h2 style="margin-bottom: 6px;">🎉 進階案例三｜志工團迎新報名網站與破冰互動遊戲</h2>
@@ -2073,8 +2237,8 @@
             </div>
         </div>
 
-        <!-- 頁 13：分流沙盒 4 大主題概述 -->
-        <div class="slide-card" id="s13">
+        <!-- 頁 14：分流沙盒 4 大主題概述 -->
+        <div class="slide-card" id="s14">
             <div>
                 <span class="badge-pill">🛠️ 45m 現場動手做</span>
                 <h2 style="margin-bottom: 10px;">📂 分流沙盒：4 大高效益實戰主題</h2>
@@ -2137,8 +2301,8 @@
             </div>
         </div>
 
-        <!-- 頁 14：沙盒主題 1 與 主題 2 實戰提示詞 -->
-        <div class="slide-card" id="s14">
+        <!-- 頁 15：沙盒主題 1 與 主題 2 實戰提示詞 -->
+        <div class="slide-card" id="s15">
             <h2>💡 沙盒主題 1 與 主題 2 實戰提示詞</h2>
             <div class="prompt-label" style="color: var(--crayon-blue-dark);">
                 <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-blue);">1</span>
@@ -2159,8 +2323,8 @@
             </div>
         </div>
 
-        <!-- 頁 15：沙盒主題 3 與 主題 4 實戰提示詞 -->
-        <div class="slide-card" id="s15">
+        <!-- 頁 16：沙盒主題 3 與 主題 4 實戰提示詞 -->
+        <div class="slide-card" id="s16">
             <h2>🛠️ 沙盒主題 3 與 主題 4（現場實戰）</h2>
             <div class="prompt-label" style="color: #B45309; margin-top: 0;">
                 <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: #B45309;">3</span>
@@ -2186,8 +2350,8 @@
             </div>
         </div>
 
-        <!-- 頁 16 (獨立頁)：幹部 10 則隨身萬用指令包 -->
-        <div class="slide-card" id="s16">
+        <!-- 頁 17 (獨立頁)：幹部 10 則隨身萬用指令包 -->
+        <div class="slide-card" id="s17">
             <div>
                 <span class="badge-pill" style="margin-bottom: 8px;">🎁 隨身百寶箱</span>
                 <h2 style="margin-bottom: 10px;">📋 幹部 10 則隨身萬用指令包</h2>
@@ -2222,8 +2386,8 @@
             </div>
         </div>
 
-        <!-- 頁 17：四查口訣、生圖查錯字與個資提醒 -->
-        <div class="slide-card" id="s17">
+        <!-- 頁 18：四查口訣、生圖查錯字與個資提醒 -->
+        <div class="slide-card" id="s18">
             <h2>🛡️ 四查口訣、生圖查錯字與個資防護</h2>
             <div class="card-item orange" style="margin-bottom: 14px; background: #FFFDF5;">
                 <p style="margin: 0; font-weight: 900; font-size: 1.4rem; color: var(--crayon-orange-dark);">
@@ -2252,8 +2416,8 @@
             </div>
         </div>
 
-        <!-- 頁 18：卡關急救包 -->
-        <div class="slide-card" id="s18">
+        <!-- 頁 19：卡關急救包 -->
+        <div class="slide-card" id="s19">
             <h2>🛟 卡關急救包（遇到問題這樣問 AI）</h2>
             <div class="grid-2" style="gap: 20px;">
                 <div class="card-item coral">
@@ -2280,8 +2444,8 @@
             </div>
         </div>
 
-        <!-- 頁 19：結語 -->
-        <div class="slide-card" id="s19">
+        <!-- 頁 20：結語 -->
+        <div class="slide-card" id="s20">
             <div style="text-align: center; padding: 10px 0;">
                 <span class="badge-pill" style="font-size: 1.35rem; padding: 10px 28px;">🎉 動手實作，解放雙手！</span>
                 <div class="crayon-banner-title" style="margin: 14px 0;">
@@ -2362,11 +2526,11 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        let totalSlides = document.querySelectorAll('.slide-card').length || 19;
+        let totalSlides = document.querySelectorAll('.slide-card').length || 20;
         let currentSlide = 1;
 
         function getSlideFromHash() {
-            totalSlides = document.querySelectorAll('.slide-card').length || 19;
+            totalSlides = document.querySelectorAll('.slide-card').length || 20;
             const hash = window.location.hash;
             const match = hash.match(/#s(\d+)/);
             if (match) {
