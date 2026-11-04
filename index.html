@@ -472,6 +472,118 @@
             margin: 14px 0;
         }
 
+        /* 2x2 四大核心要素圖表樣式 (參考 OpenAI 提示詞官方架構圖) */
+        .quad-matrix-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 16px 0;
+            width: 100%;
+        }
+
+        .quad-cell {
+            background: #FFFFFF;
+            border-radius: 22px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+            border: 2.5px solid;
+            transition: transform 0.2s ease;
+        }
+
+        .quad-cell:hover {
+            transform: translateY(-2px);
+        }
+
+        .quad-cell.cell-goal {
+            border-color: #A5D8F3;
+            background: linear-gradient(135deg, #F0F9FF 0%, #FFFFFF 100%);
+            flex-direction: row-reverse;
+        }
+        .quad-cell.cell-context {
+            border-color: #D4C9F4;
+            background: linear-gradient(135deg, #FAF7FF 0%, #FFFFFF 100%);
+        }
+        .quad-cell.cell-output {
+            border-color: #FDE68A;
+            background: linear-gradient(135deg, #FFFDF0 0%, #FFFFFF 100%);
+            flex-direction: row-reverse;
+        }
+        .quad-cell.cell-boundaries {
+            border-color: #A7F3D0;
+            background: linear-gradient(135deg, #F0FDF4 0%, #FFFFFF 100%);
+        }
+
+        .quad-badge {
+            min-width: 110px;
+            height: 90px;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 900;
+            flex-shrink: 0;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+        }
+
+        .cell-goal .quad-badge {
+            background: #88BCE2;
+            color: #FFFFFF;
+        }
+        .cell-context .quad-badge {
+            background: #B5ABD8;
+            color: #FFFFFF;
+        }
+        .cell-output .quad-badge {
+            background: #F7D046;
+            color: #78350F;
+        }
+        .cell-boundaries .quad-badge {
+            background: #82C869;
+            color: #FFFFFF;
+        }
+
+        .quad-badge-zh {
+            font-size: 1.4rem;
+            line-height: 1.2;
+            letter-spacing: 1px;
+        }
+        .quad-badge-en {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            margin-top: 2px;
+            font-weight: 700;
+        }
+
+        .quad-content {
+            flex: 1;
+        }
+        .quad-question {
+            font-size: 1.22rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            line-height: 1.45;
+        }
+        .quad-volunteer-tip {
+            font-size: 1.05rem;
+            color: #4B5563;
+            line-height: 1.5;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 6px 10px;
+            border-radius: 10px;
+            border-left: 3.5px solid currentColor;
+            font-weight: 700;
+        }
+        .cell-goal .quad-volunteer-tip { border-color: #4E8DBE; color: #1E3A8A; }
+        .cell-context .quad-volunteer-tip { border-color: #7E72AC; color: #4C1D95; }
+        .cell-output .quad-volunteer-tip { border-color: #D97706; color: #78350F; }
+        .cell-boundaries .quad-volunteer-tip { border-color: #059669; color: #065F46; }
+
         .card-item {
             background: #FFFFFF;
             border: 3px solid var(--crayon-blue);
@@ -768,6 +880,11 @@
             .prompt-box { font-size: 1.08rem; max-height: 190px; }
             .step-row { padding: 14px 18px; gap: 16px; }
             .sketch-num { width: 58px; height: 58px; min-width: 58px; font-size: 1.8rem; }
+            .quad-cell { padding: 14px 16px; gap: 14px; }
+            .quad-badge { min-width: 95px; height: 80px; }
+            .quad-badge-zh { font-size: 1.25rem; }
+            .quad-question { font-size: 1.12rem; }
+            .quad-volunteer-tip { font-size: 0.95rem; }
             .nav-btn {
                 font-size: 1.1rem;
                 padding: 9px 24px;
@@ -934,6 +1051,38 @@
             .cmd-tab-btn {
                 font-size: 0.95rem;
                 padding: 9px 12px;
+            }
+
+            /* 四要素 2x2 在手機轉單欄堆疊 */
+            .quad-matrix-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin: 10px 0;
+            }
+            .quad-cell {
+                flex-direction: row !important;
+                padding: 12px 14px;
+                gap: 12px;
+                border-radius: 16px;
+            }
+            .quad-badge {
+                min-width: 80px;
+                height: 72px;
+                border-radius: 12px;
+            }
+            .quad-badge-zh {
+                font-size: 1.15rem;
+            }
+            .quad-badge-en {
+                font-size: 0.8rem;
+            }
+            .quad-question {
+                font-size: 1.05rem;
+                margin-bottom: 4px;
+            }
+            .quad-volunteer-tip {
+                font-size: 0.9rem;
+                padding: 5px 8px;
             }
 
             /* 卡片與提醒區塊 */
@@ -1123,7 +1272,7 @@
                         <div class="sketch-num" style="color: var(--crayon-blue);">1</div>
                         <div class="step-row-content">
                             <h3 style="color: var(--crayon-blue-dark);">20min 工具定位與心法暖身</h3>
-                            <p>掌握常用 AI 工具組合與 ROCE 公式，生出志工招募說明文</p>
+                            <p>掌握常用 AI 工具組合與指令四要素（目標、背景、輸出、邊界）</p>
                         </div>
                     </div>
                     <div class="step-row">
@@ -1201,51 +1350,84 @@
             </div>
         </div>
 
-        <!-- 頁 4：心法 ROCE -->
+        <!-- 頁 4：心法 指令四要素（OpenAI 官方架構） -->
         <div class="slide-card" id="s4">
-            <div class="split-work-layout">
-                <div>
-                    <div class="work-2x2-box">
-                        <span class="work-big-letter c-green" style="--rot: -6deg;">R</span>
-                        <span class="work-big-letter c-purple" style="--rot: 5deg;">O</span>
-                        <span class="work-big-letter c-yellow" style="--rot: 4deg;">C</span>
-                        <span class="work-big-letter c-coral" style="--rot: -4deg;">E</span>
+            <div style="text-align: center; margin-bottom: 12px;">
+                <span class="badge-pill">OpenAI 官方工作簡報心法</span>
+                <h2 style="justify-content: center; font-size: 2.2rem; margin-bottom: 6px;">🎯 指令四要素：目標・背景・輸出・邊界</h2>
+                <p style="font-size: 1.15rem; color: var(--text-muted); margin: 0;">
+                    不必死記生硬技術術語！就像寫工作簡報（Brief）交代工作一樣，把這 4 件事講清楚：
+                </p>
+            </div>
+
+            <!-- 2x2 四大核心要素圖表 -->
+            <div class="quad-matrix-grid">
+                <!-- 1. 目標 (Goal) -->
+                <div class="quad-cell cell-goal">
+                    <div class="quad-badge">
+                        <span class="quad-badge-zh">目標</span>
+                        <span class="quad-badge-en">(Goal)</span>
                     </div>
-                    <p style="text-align: center; font-size: 1.5rem; font-weight: 900; color: var(--text-muted);">黃金心法四要素</p>
+                    <div class="quad-content">
+                        <div class="quad-question">具體需要 AI 完成什麼成果？</div>
+                        <div class="quad-volunteer-tip">
+                            <strong>志工團實務：</strong>只講期望的成果（如：寫 150 字招募短文、設計報名表單架構），不需指導 AI 一步步的操作步驟。
+                        </div>
+                    </div>
                 </div>
-                <div class="step-list-vertical" style="gap: 16px;">
-                    <div class="step-row">
-                        <div class="sketch-num" style="color: var(--crayon-green);">1</div>
-                        <div class="step-row-content">
-                            <h3 style="color: var(--crayon-green-dark);">Role 角色</h3>
-                            <p>告訴 AI 它是誰（如：志工團幹部）</p>
+
+                <!-- 2. 背景 (Context) -->
+                <div class="quad-cell cell-context">
+                    <div class="quad-badge">
+                        <span class="quad-badge-zh">背景</span>
+                        <span class="quad-badge-en">(Context)</span>
+                    </div>
+                    <div class="quad-content">
+                        <div class="quad-question">有哪些活動資料與內部脈絡？</div>
+                        <div class="quad-volunteer-tip">
+                            <strong>志工團實務：</strong>提供學校活動時間（11/28 體表會）、組別與時段清單。AI 不會通靈，資料越清楚，產出越到位！
                         </div>
                     </div>
-                    <div class="step-row">
-                        <div class="sketch-num" style="color: var(--crayon-purple-dark);">2</div>
-                        <div class="step-row-content">
-                            <h3 style="color: var(--crayon-purple-dark);">Task 任務</h3>
-                            <p>明確交代要做什麼事情</p>
+                </div>
+
+                <!-- 3. 輸出 (Output) -->
+                <div class="quad-cell cell-output">
+                    <div class="quad-badge">
+                        <span class="quad-badge-zh">輸出</span>
+                        <span class="quad-badge-en">(Output)</span>
+                    </div>
+                    <div class="quad-content">
+                        <div class="quad-question">交付成品需要什麼格式與篇幅？</div>
+                        <div class="quad-volunteer-tip">
+                            <strong>志工團實務：</strong>指定呈現樣式（如：表格、Google 表單題型、約 150 字），省下後續重新排版整理的時間。
                         </div>
                     </div>
-                    <div class="step-row">
-                        <div class="sketch-num" style="color: var(--crayon-orange);">3</div>
-                        <div class="step-row-content">
-                            <h3 style="color: var(--crayon-orange-dark);">Condition 條件</h3>
-                            <p>限制與細節（如：字數、欄位）</p>
-                        </div>
+                </div>
+
+                <!-- 4. 邊界 (Boundaries) -->
+                <div class="quad-cell cell-boundaries">
+                    <div class="quad-badge">
+                        <span class="quad-badge-zh">邊界</span>
+                        <span class="quad-badge-en">(Boundaries)</span>
                     </div>
-                    <div class="step-row">
-                        <div class="sketch-num" style="color: var(--crayon-coral);">4</div>
-                        <div class="step-row-content">
-                            <h3 style="color: var(--crayon-coral-dark);">Format 格式</h3>
-                            <p>期望的呈現方式（如：表格、條列）</p>
+                    <div class="quad-content">
+                        <div class="quad-question">有哪些限制與紅線絕對不能踩？</div>
+                        <div class="quad-volunteer-tip">
+                            <strong>志工團實務：</strong>明訂禁忌與限制（如：學生個資絕不提供、當天不供午餐自理、單選/複選防呆），避免 AI 自由發揮。
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="highlight-box" style="margin-top: 20px; margin-bottom: 0; text-align: center;">
-                <p style="margin:0; font-weight: 900; font-size: 1.3rem;">💡 小撇步：「答得不好是少了其中一個字母，缺哪個補哪個」</p>
+
+            <!-- 小 Tip 簡化盒 -->
+            <div class="highlight-box" style="margin-top: 14px; margin-bottom: 0; padding: 14px 20px; background: #FFFDF7; border-color: var(--crayon-orange);">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    <span style="font-size: 1.35rem;">💡</span>
+                    <strong style="font-size: 1.15rem; color: #92400E;">實戰小秘訣：不必每次填滿，彈性組合！</strong>
+                </div>
+                <p style="margin: 0; font-size: 1.05rem; color: #78350F; line-height: 1.6;">
+                    官方特別強調：這四要素是<strong>「選用（Optional）的檢查清單」</strong>。平日隨手簡單小事<strong>只需一句話</strong>；只有在交辦像活動招募、排班統計等重要且不容出錯的任務時，把這四要素組合在一起，才能發揮最大的威力、一次到位！
+                </p>
             </div>
         </div>
 
@@ -1290,41 +1472,41 @@
         <div class="slide-card" id="s6">
             <h2 style="margin-bottom: 12px;">🔍 實作一指令大拆解：這段文字指令是怎麼一步步寫出來的？</h2>
             <p style="font-size: 1.18rem; color: var(--text-muted); margin-bottom: 10px;">
-                看起來很長的指令不用怕！其實只是把 <strong>4 塊積木</strong> 照順序拼起來（顏色對應下方 4 步驟）：
+                看起來很長不用怕！其實就是運用<strong>「目標・背景・輸出・邊界」</strong>四要素，照順序拼起來（顏色對應下方 4 步驟）：
             </p>
 
             <!-- 彩色拆解對照指令框 -->
             <div style="background: #FFFFFF; border: 3px solid var(--text-main); border-radius: 22px; padding: 16px 22px; font-size: 1.12rem; line-height: 1.75; margin-bottom: 16px; box-shadow: 4px 4px 0px rgba(0,0,0,0.06);">
-                <span style="background: #E1F0FA; color: #245D8C; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【① 角色與情境】你現在是國小志工團的幹部，我們即將在 11/28（六）08:00-15:00 舉辦學校年度大事「體育表演會（體表會）」，需要招募各組志工當天來支援。</span>
-                <span style="background: #FFF0DB; color: #9E5808; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【② 明確任務】請幫我完成兩件事：1. 撰寫一段約 150 字、溫暖且有號召力的「Google 表單頂部說明文字」... 2. 設計這份「體表會志工支援招募表單」的題目架構，</span>
-                <span style="background: #E5F6DF; color: #2F6E1E; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【③ 細節與欄位條件】包含：基本資料（姓名、line ID、原屬組別：導護組、圖書組...）；支援時間（08:00~09:20...）；工作項目（複選：報到引導、秩序維安...）；備註欄。</span>
-                <span style="background: #FFE5E5; color: #A62B2B; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【④ 格式與防呆】請標註每一題建議的 Google 表單題型（簡答、單選、核取方塊、下拉式選單），確保志工填寫時不會填錯格式。</span>
+                <span style="background: #E1F0FA; color: #245D8C; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【① 目標】請幫我完成兩件事：1. 撰寫一段約 150 字、溫暖且有號召力的「Google 表單頂部說明文字」... 2. 設計這份「體表會志工支援招募表單」的題目架構。</span>
+                <span style="background: #FAF7FF; color: #5B21B6; border: 1.5px solid #D4C9F4; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【② 背景】你現在是國小志工團的幹部，我們即將在 11/28（六）08:00-15:00 舉辦「體育表演會（體表會）」，需要招募各組志工當天來支援。包含：基本資料（姓名、line ID、原屬組別：導護組、圖書組...）；支援時間（08:00~09:20...）；工作項目（報到引導、秩序維安...）。</span>
+                <span style="background: #FFFDF0; color: #78350F; border: 1.5px solid #FDE68A; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【③ 輸出】請標註每一題建議的 Google 表單題型（簡答、單選、核取方塊、下拉式選單），方便直接照著建立表單。</span>
+                <span style="background: #F0FDF4; color: #065F46; border: 1.5px solid #A7F3D0; padding: 2px 6px; border-radius: 6px; font-weight: 900;">【④ 邊界】確保志工填寫時不會填錯格式（工作項目用複選、時段單選）、當天全面不供餐請自理、各組別選項嚴格依提供內容設計。</span>
             </div>
 
             <!-- 四步驟架構分析 -->
             <div class="process-horizontal" style="margin: 8px 0 0 0; gap: 12px;">
                 <div class="process-step" style="border-color: var(--crayon-blue); padding: 16px 14px;">
                     <div class="sketch-num" style="color: var(--crayon-blue); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">1</div>
-                    <h3 style="color: var(--crayon-blue-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">角色與活動背景</h3>
-                    <p style="font-size: 1.08rem;">先講清楚<strong>你是誰＋辦什麼活動＋日期時間</strong>，AI 寫出來的語氣才會像溫暖的幹部而非冰冷公文。</p>
+                    <h3 style="color: var(--crayon-blue-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">目標 (Goal)</h3>
+                    <p style="font-size: 1.08rem;">先明確列出<strong>要 AI 交出的成果</strong>（1. 寫 150 字說明文、2. 設計 6 大欄位題目架構），不囉嗦操作步驟。</p>
                 </div>
                 <div class="process-arrow" style="font-size: 2rem;">➜</div>
-                <div class="process-step" style="border-color: var(--crayon-orange); padding: 16px 14px;">
-                    <div class="sketch-num" style="color: var(--crayon-orange); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">2</div>
-                    <h3 style="color: var(--crayon-orange-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">拆解任務編號</h3>
-                    <p style="font-size: 1.08rem;">要它做兩件事就標上<strong>「1. 寫說明文、2. 設計題目」</strong>，並加上「150字、溫暖有號召力」標準。</p>
+                <div class="process-step" style="border-color: var(--crayon-purple); padding: 16px 14px;">
+                    <div class="sketch-num" style="color: var(--crayon-purple-dark); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">2</div>
+                    <h3 style="color: var(--crayon-purple-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">背景 (Context)</h3>
+                    <p style="font-size: 1.08rem;">提供<strong>志工幹部身分＋11/28 體表會細節＋組別時段清單</strong>。AI 不會通靈，資料餵得越齊，產出越到位！</p>
+                </div>
+                <div class="process-arrow" style="font-size: 2rem;">➜</div>
+                <div class="process-step" style="border-color: #F59E0B; padding: 16px 14px;">
+                    <div class="sketch-num" style="color: #F59E0B; width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">3</div>
+                    <h3 style="color: #B45309; font-size: 1.35rem; margin: 10px 0 6px 0;">輸出 (Output)</h3>
+                    <p style="font-size: 1.08rem;">指定<strong>交付格式（標註建議的 Google 表單題型）</strong>，方便我們拿著產出直接拉表單，省時又精準。</p>
                 </div>
                 <div class="process-arrow" style="font-size: 2rem;">➜</div>
                 <div class="process-step" style="border-color: var(--crayon-green); padding: 16px 14px;">
-                    <div class="sketch-num" style="color: var(--crayon-green); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">3</div>
-                    <h3 style="color: var(--crayon-green-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">餵入真實選項</h3>
-                    <p style="font-size: 1.08rem;"><strong>AI 不會通靈知道學校有哪些組！</strong>把組別、時段、工作項目選項寫在括號裡，產出才不用重改。</p>
-                </div>
-                <div class="process-arrow" style="font-size: 2rem;">➜</div>
-                <div class="process-step" style="border-color: var(--crayon-coral); padding: 16px 14px;">
-                    <div class="sketch-num" style="color: var(--crayon-coral); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">4</div>
-                    <h3 style="color: var(--crayon-coral-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">指定格式防呆</h3>
-                    <p style="font-size: 1.08rem;">請 AI 標註<strong>「建議的表單題型（單選/核取方塊）」</strong>，幫我們做好防呆，後續試算表才好統計！</p>
+                    <div class="sketch-num" style="color: var(--crayon-green); width: 56px; height: 56px; min-width: 56px; font-size: 1.8rem;">4</div>
+                    <h3 style="color: var(--crayon-green-dark); font-size: 1.35rem; margin: 10px 0 6px 0;">邊界 (Boundaries)</h3>
+                    <p style="font-size: 1.08rem;">設好<strong>限制與防呆防線</strong>（如：當日全面不供餐請自理、單選核取方塊不可混淆），避免 AI 自由發揮惹麻煩！</p>
                 </div>
             </div>
         </div>
@@ -1564,16 +1746,16 @@
             <div class="prompt-container" style="margin: 6px 0 14px 0;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                     <span id="previewTitle" style="font-size: 1.22rem; font-weight: 900; color: var(--crayon-coral-dark);">
-                        📌 已選擇：① 通用開場 (ROCE)
+                        📌 已選擇：① 通用開場（四要素）
                     </span>
                     <button class="copy-btn" style="position: static; padding: 8px 22px; font-size: 1.05rem;" onclick="copyPreviewCmd(this)">📋 複製此指令</button>
                 </div>
-                <div class="prompt-box" id="cmdPreviewBox" style="max-height: 140px; border-color: var(--crayon-coral); font-weight: 700; color: #1E293B;">你是國小志工團幹部，請幫我 [任務]，對象是 [對象]，語氣溫柔親切。</div>
+                <div class="prompt-box" id="cmdPreviewBox" style="max-height: 140px; border-color: var(--crayon-coral); font-weight: 700; color: #1E293B;">我是國小志工團幹部，請幫我 [明確目標]，背景是 [活動細節]，請以 [條列/表格] 輸出，語氣溫柔親切。</div>
             </div>
 
             <!-- 指令選項按鈕群 (點擊切換顯示) -->
             <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;" id="cmdTabContainer">
-                <button class="cmd-tab-btn active" onclick="selectCmd(0, this)">① 通用開場 (ROCE) <span>👉</span></button>
+                <button class="cmd-tab-btn active" onclick="selectCmd(0, this)">① 通用開場（四要素） <span>👉</span></button>
                 <button class="cmd-tab-btn" onclick="selectCmd(1, this)">② 公告改寫 <span>👉</span></button>
                 <button class="cmd-tab-btn" onclick="selectCmd(2, this)">③ 會議整理 <span>👉</span></button>
                 <button class="cmd-tab-btn" onclick="selectCmd(3, this)">④ 名單比對 <span>👉</span></button>
@@ -1634,12 +1816,12 @@
                 </div>
                 <div class="card-item orange">
                     <h3 style="color: var(--crayon-orange-dark);">🔄 答案不對或鬼打牆</h3>
-                    <p style="margin:0;">補上缺少的 ROCE（角色、任務、條件、格式）再問一次。</p>
+                    <p style="margin:0;">補上缺少的要素（目標、背景、輸出、邊界）再問一次。</p>
                 </div>
             </div>
             <div style="text-align: center; margin-top: 22px; background: #FFF; padding: 16px; border-radius: 20px; border: 2.5px dashed var(--crayon-purple);">
                 <p style="margin: 0; font-size: 1.35rem; font-weight: 900; color: var(--crayon-purple-dark);">
-                    💡 終極大絕招：還是鬼打牆就「開新對話」，用 ROCE 重新講一次需求！
+                    💡 終極大絕招：還是鬼打牆就「開新對話」，用「目標・背景・輸出・邊界」重新講一次需求！
                 </p>
             </div>
         </div>
@@ -1933,8 +2115,8 @@
         // 幹部 10 則指令切換與預覽邏輯
         const cmdData = [
             {
-                title: "① 通用開場 (ROCE)",
-                text: "你是國小志工團幹部，請幫我 [任務]，對象是 [對象]，語氣溫柔親切。"
+                title: "① 通用開場（四要素）",
+                text: "我是國小志工團幹部，請幫我 [明確目標]，背景是 [活動細節]，請以 [條列/表格] 輸出，語氣溫柔親切。"
             },
             {
                 title: "② 公告改寫",
