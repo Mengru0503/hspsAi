@@ -30,6 +30,11 @@
             --font-main: 'Noto Sans TC', 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
         }
 
+        html {
+            overflow-y: scroll;
+            scrollbar-gutter: stable;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -135,16 +140,16 @@
             background: rgba(252, 251, 247, 0.72);
             backdrop-filter: blur(3px);
             width: 100%;
-            min-height: 700px;
+            min-height: 560px;
             border-radius: 32px;
             border: 3px solid rgba(226, 220, 208, 0.7);
             box-shadow: 0 14px 40px rgba(80, 70, 60, 0.06);
-            padding: 44px 64px;
+            padding: 34px 52px;
             display: none;
             flex-direction: column;
             justify-content: center;
             position: relative;
-            animation: fadeInSlide 0.35s ease-out forwards;
+            animation: fadeInSlide 0.25s ease-out forwards;
         }
 
         .slide-card.active {
@@ -152,8 +157,8 @@
         }
 
         @keyframes fadeInSlide {
-            0% { opacity: 0; transform: translateY(8px); }
-            100% { opacity: 1; transform: translateY(0); }
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
         /* 蠟筆斜線手繪大字效果 (參考圖2 WORK 與 圖3 PROCESS) */
@@ -1664,17 +1669,17 @@
                             <span>🎮</span> 遊戲化學習神器
                         </div>
                         <h3 class="case-edu-title" style="color: #0C4A6E;">
-                            案例二：把社會自然科目刻成「時空冒險樂園」遊戲網站
+                            案例二：為孩子量身打造專屬 3D 闖關複習網「小葦冒險島」
                         </h3>
                         <p class="case-edu-desc">
-                            面對不想死背書的小孩，熱血爸爸用 Claude <strong>親手刻出專屬的小五社會、自然、國小英文互動遊戲「時空冒險樂園」</strong>。將枯燥的課本知識轉化成解謎過關冒險，瞬間點燃孩子的自主學習熱情！
+                            家長運用 AI 為孩子親手刻出<strong>「小葦冒險島」每日 30 分鐘 3D 複習遊戲</strong>！將學科練習變成「8 關出島任務與打倒 BUG-BOT」，搭配<strong>打卡印章、升級傭兵、錯題畢業本與家長後台「AI 一鍵自動補題」</strong>，讓孩子每天主動搶著闖關複習！
                         </p>
                         <div class="case-edu-quote" style="border-color: #0284C7; color: #0369A1;">
-                            💡 <strong>痛點破解：</strong>不用懂軟體工程，跟 AI 聊出專屬遊戲，讓孩子的「抗拒」變「沉浸」！
+                            💡 <strong>痛點破解：</strong>不用懂軟體工程，跟 AI 聊出專屬 3D 遊戲與自動出題系統，把「抗拒複習」變成「沉浸打怪」！
                         </div>
                     </div>
-                    <a href="https://timepark.ciyulab.com" target="_blank" rel="noopener noreferrer" class="case-link-btn btn-blue">
-                        <span>🚀 點擊體驗：時空冒險樂園 (timepark.ciyulab.com)</span>
+                    <a href="https://bowei-adventure-island.claire-ho.chatgpt.site/" target="_blank" rel="noopener noreferrer" class="case-link-btn btn-blue">
+                        <span>🚀 點擊體驗：小葦冒險島 (chatgpt.site)</span>
                         <span style="font-size: 1.1rem;">↗</span>
                     </a>
                 </div>
@@ -2319,54 +2324,54 @@
             </div>
 
             <!-- 2x2 寬敞網格排版 -->
-            <div class="grid-2" style="gap: 16px;">
+            <div class="grid-2" style="gap: 12px;">
                 <!-- 主題 1 -->
-                <div class="step-row" style="border-color: var(--crayon-blue); background: #FAFDFE; padding: 18px 20px;">
-                    <div class="sketch-num" style="color: var(--crayon-blue); width: 52px; height: 52px; min-width: 52px; font-size: 1.6rem;">1</div>
+                <div class="step-row" style="border-color: var(--crayon-blue); background: #FAFDFE; padding: 12px 18px; gap: 14px;">
+                    <div class="sketch-num" style="color: var(--crayon-blue); width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem;">1</div>
                     <div class="step-row-content">
-                        <h3 style="color: var(--crayon-blue-dark); font-size: 1.35rem; margin-bottom: 6px;">【名單驗證表單】防呆表單與正則表達式／下拉選單設計</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.55; color: #4B5563;">
+                        <h3 style="color: var(--crayon-blue-dark); font-size: 1.25rem; margin-bottom: 4px;">【名單驗證表單】防呆表單與正則表達式／下拉選單設計</h3>
+                        <p style="font-size: 1rem; line-height: 1.5; color: #4B5563;">
                             <strong>適用情境：</strong>製作回報表單時，用<strong>正則表達式（手機格式限制）或下拉選單</strong>，防止大家填錯姓名、手機或時數。
                         </p>
                     </div>
                 </div>
 
                 <!-- 主題 2 -->
-                <div class="step-row" style="border-color: var(--crayon-coral); background: #FFFBFB; padding: 18px 20px;">
-                    <div class="sketch-num" style="color: var(--crayon-coral); width: 52px; height: 52px; min-width: 52px; font-size: 1.6rem;">2</div>
+                <div class="step-row" style="border-color: var(--crayon-coral); background: #FFFBFB; padding: 12px 18px; gap: 14px;">
+                    <div class="sketch-num" style="color: var(--crayon-coral); width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem;">2</div>
                     <div class="step-row-content">
-                        <h3 style="color: var(--crayon-coral-dark); font-size: 1.35rem; margin-bottom: 6px;">【試算表進階統計】各組人數、時數加總與名單串接</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.55; color: #4B5563;">
+                        <h3 style="color: var(--crayon-coral-dark); font-size: 1.25rem; margin-bottom: 4px;">【試算表進階統計】各組人數、時數加總與名單串接</h3>
+                        <p style="font-size: 1rem; line-height: 1.5; color: #4B5563;">
                             <strong>適用情境：</strong>名單收回來後不再手算！用 <strong>COUNTIF、SUMIF 與 FILTER/JOIN</strong>，一鍵自動算出人數、時數並串接名單。
                         </p>
                     </div>
                 </div>
 
                 <!-- 主題 3 -->
-                <div class="step-row" style="border-color: #F59E0B; background: #FFFDF7; padding: 18px 20px;">
-                    <div class="sketch-num" style="color: #F59E0B; width: 52px; height: 52px; min-width: 52px; font-size: 1.6rem;">3</div>
+                <div class="step-row" style="border-color: #F59E0B; background: #FFFDF7; padding: 12px 18px; gap: 14px;">
+                    <div class="sketch-num" style="color: #F59E0B; width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem;">3</div>
                     <div class="step-row-content">
-                        <h3 style="color: #B45309; font-size: 1.35rem; margin-bottom: 6px;">【活動招募包】一鍵產出表單文案＋LINE 宣傳＋行前通知</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.55; color: #4B5563;">
+                        <h3 style="color: #B45309; font-size: 1.25rem; margin-bottom: 4px;">【活動招募包】一鍵產出表單文案＋LINE 宣傳＋行前通知</h3>
+                        <p style="font-size: 1rem; line-height: 1.5; color: #4B5563;">
                             <strong>適用情境：</strong>舉辦校園支援活動時，輸入基本活動資訊，一次打包產出<strong>表單說明、LINE 首發招募與行前提醒</strong>。
                         </p>
                     </div>
                 </div>
 
                 <!-- 主題 4 -->
-                <div class="step-row" style="border-color: var(--crayon-green); background: #F8FDF9; padding: 18px 20px;">
-                    <div class="sketch-num" style="color: var(--crayon-green); width: 52px; height: 52px; min-width: 52px; font-size: 1.6rem;">4</div>
+                <div class="step-row" style="border-color: var(--crayon-green); background: #F8FDF9; padding: 12px 18px; gap: 14px;">
+                    <div class="sketch-num" style="color: var(--crayon-green); width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem;">4</div>
                     <div class="step-row-content">
-                        <h3 style="color: var(--crayon-green-dark); font-size: 1.35rem; margin-bottom: 6px;">【檔案稽核與名單比對】抓出未簽到、漏填或重複名單</h3>
-                        <p style="font-size: 1.05rem; line-height: 1.55; color: #4B5563;">
+                        <h3 style="color: var(--crayon-green-dark); font-size: 1.25rem; margin-bottom: 4px;">【檔案稽核與名單比對】抓出未簽到、漏填或重複名單</h3>
+                        <p style="font-size: 1rem; line-height: 1.5; color: #4B5563;">
                             <strong>適用情境：</strong>比對「報名名單」與「實到名單」，讓 AI 快速抓出<strong>漏填未到、重複填寫與疑似打錯字</strong>的同音異字名單！
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div class="highlight-box" style="margin-top: 16px; margin-bottom: 0;">
-                <p style="margin:0; font-size: 1.25rem; font-weight: 900; color: var(--crayon-coral-dark);">
+            <div class="highlight-box" style="margin-top: 10px; margin-bottom: 0; padding: 10px 18px;">
+                <p style="margin:0; font-size: 1.15rem; font-weight: 900; color: var(--crayon-coral-dark);">
                     ⚠️ 個資安全提醒：「練習前請先把真實姓名、電話改成代號再貼給 AI！」
                 </p>
             </div>
@@ -2374,14 +2379,14 @@
 
         <!-- 頁 15：沙盒主題 1 與 主題 2 實戰提示詞 -->
         <div class="slide-card" id="s15">
-            <h2>💡 沙盒主題 1 與 主題 2 實戰提示詞</h2>
-            <div class="prompt-label" style="color: var(--crayon-blue-dark);">
-                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-blue);">1</span>
+            <h2 style="margin-bottom: 10px;">💡 沙盒主題 1 與 主題 2 實戰提示詞</h2>
+            <div class="prompt-label" style="color: var(--crayon-blue-dark); margin-top: 0;">
+                <span class="sketch-num" style="width: 40px; height: 40px; min-width: 40px; font-size: 1.3rem; color: var(--crayon-blue);">1</span>
                 主題 1：【名單驗證表單】防呆表單與正則表達式／下拉選單設計
             </div>
-            <div class="prompt-container">
+            <div class="prompt-container" style="margin: 4px 0 10px 0;">
                 <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box">我要製作一份讓志工上傳資料的 Google 表單，為了避免大家填錯姓名、組別或格式導致後續無法核對，請幫我完成以下兩件事：
+                <div class="prompt-box" style="max-height: 135px;">我要製作一份讓志工上傳資料的 Google 表單，為了避免大家填錯姓名、組別或格式導致後續無法核對，請幫我完成以下兩件事：
 1. 規劃一份「志工時數／資料回報防呆表單」的 4 個題目與防呆設定：
    - ① 組別（建議用「下拉式選單」：導護組、圖書組、園藝組、國輔、英輔、數輔、安全照護組、資訊美編組、人資組、熊熊組、生活媽媽組、健輔組）
    - ② 志工姓名（請說明如何善用「下拉式選單」或搭配試算表外掛，避免志工打錯字或填寫暱稱）
@@ -2390,13 +2395,13 @@
 2. 請直接用表格整理每一題的「題目名稱、建議題型、回應驗證設定步驟、錯誤提示語」，方便我照著勾選設定。</div>
             </div>
 
-            <div class="prompt-label" style="color: var(--crayon-coral-dark);">
-                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-coral);">2</span>
+            <div class="prompt-label" style="color: var(--crayon-coral-dark); margin-top: 0;">
+                <span class="sketch-num" style="width: 40px; height: 40px; min-width: 40px; font-size: 1.3rem; color: var(--crayon-coral);">2</span>
                 主題 2：【試算表進階統計】各組人數、時數加總與名單串接
             </div>
-            <div class="prompt-container">
+            <div class="prompt-container" style="margin: 4px 0 4px 0;">
                 <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box" style="border-color: var(--crayon-coral);">請幫我進行 Google 試算表的自動統計練習，請一次完成以下兩個部分：
+                <div class="prompt-box" style="max-height: 135px; border-color: var(--crayon-coral);">請幫我進行 Google 試算表的自動統計練習，請一次完成以下兩個部分：
 
 【第一部分：產生 15 筆練習假資料】
 請先產生一個 4 欄位的表格（不要加編號），方便我貼在試算表的 `A1` 儲存格：
@@ -2414,14 +2419,14 @@
 
         <!-- 頁 16：沙盒主題 3 與 主題 4 實戰提示詞 -->
         <div class="slide-card" id="s16">
-            <h2>🛠️ 沙盒主題 3 與 主題 4（現場實戰）</h2>
+            <h2 style="margin-bottom: 10px;">🛠️ 沙盒主題 3 與 主題 4（現場實戰）</h2>
             <div class="prompt-label" style="color: #B45309; margin-top: 0;">
-                <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: #B45309;">3</span>
+                <span class="sketch-num" style="width: 40px; height: 40px; min-width: 40px; font-size: 1.3rem; color: #B45309;">3</span>
                 主題 3：【活動招募包】一鍵產出表單文案＋LINE 宣傳＋行前通知
             </div>
-            <div class="prompt-container" style="margin-bottom: 16px;">
+            <div class="prompt-container" style="margin: 4px 0 10px 0;">
                 <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box" style="max-height: 160px; border-color: #F59E0B;">我們志工團即將舉辦一場校園支援活動，請幫我一次產出完整的「活動招募文案三件組」。
+                <div class="prompt-box" style="max-height: 130px; border-color: #F59E0B;">我們志工團即將舉辦一場校園支援活動，請幫我一次產出完整的「活動招募文案三件組」。
 活動基本資訊如下（若括號內我未修改，請直接以預設情境撰寫）：
 - 活動名稱：【期末大掃除暨圖書盤點日】
 - 活動時間：【12/18（五）09:00–11:30】
@@ -2435,12 +2440,12 @@
             </div>
 
             <div class="prompt-label" style="color: var(--crayon-green-dark); margin-top: 0;">
-                <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: var(--crayon-green-dark);">4</span>
+                <span class="sketch-num" style="width: 40px; height: 40px; min-width: 40px; font-size: 1.3rem; color: var(--crayon-green-dark);">4</span>
                 主題 4：【檔案稽核與名單比對】抓出未簽到、漏填或重複名單
             </div>
-            <div class="prompt-container" style="margin-bottom: 8px;">
+            <div class="prompt-container" style="margin: 4px 0 8px 0;">
                 <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box" style="max-height: 160px; border-color: var(--crayon-green);">我是志工團幹部，常需要比對「報名名單」與「實際簽到／繳交名單」，抓出誰漏填、誰重複報名或名字打錯。
+                <div class="prompt-box" style="max-height: 130px; border-color: var(--crayon-green);">我是志工團幹部，常需要比對「報名名單」與「實際簽到／繳交名單」，抓出誰漏填、誰重複報名或名字打錯。
 請直接用以下我提供的測試名單（也可替換成我自己的名單），幫我執行「名單稽核比對」：
 
 - 【A. 應到／報名名單（共 10 人）】：林雅婷、陳建宏、張家豪、王怡君、李淑芬、吳冠宇、劉詩涵、蔡宗憲、許心怡、鄭凱文
@@ -2452,8 +2457,8 @@
 3. ❓ 疑似打錯字或不在名單內的人（在 B 名單有，但 A 名單沒有的人，並幫我比對是否與 A 名單某人名字高度相似，例如同音異字）
 4. 💬 溫馨催繳／確認訊息範本：請幫我寫一句 50 字以內、語氣客氣不尷尬的 LINE 群組提醒文字，請漏填或名字有誤的夥伴協助確認。</div>
             </div>
-            <div style="background: #FFFDF5; border: 2.5px dashed var(--crayon-orange); padding: 10px 18px; border-radius: 14px; text-align: center;">
-                <p style="margin: 0; font-size: 1.15rem; font-weight: 800; color: var(--crayon-orange-dark);">
+            <div style="background: #FFFDF5; border: 2.5px dashed var(--crayon-orange); padding: 8px 16px; border-radius: 14px; text-align: center;">
+                <p style="margin: 0; font-size: 1.1rem; font-weight: 800; color: var(--crayon-orange-dark);">
                     🙋‍♀️ 現場卡關請直接舉手！講師將帶著您的實際團務檔案進行一對一現場改造門診。
                 </p>
             </div>
