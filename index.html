@@ -584,6 +584,179 @@
         .cell-output .quad-volunteer-tip { border-color: #D97706; color: #78350F; }
         .cell-boundaries .quad-volunteer-tip { border-color: #059669; color: #065F46; }
 
+        /* 進階案例黃金三宮格 (28% : 44% : 28%) */
+        .tri-case-layout {
+            display: grid;
+            grid-template-columns: 28fr 44fr 28fr;
+            gap: 16px;
+            margin: 12px 0 6px 0;
+            align-items: stretch;
+        }
+
+        .tri-card {
+            background: #FFFFFF;
+            border-radius: 20px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+            border: 2.5px solid;
+        }
+
+        .tri-card.before-card {
+            border-color: #FCA5A5;
+            background: linear-gradient(180deg, #FEF2F2 0%, #FFFFFF 100%);
+        }
+
+        .tri-card.prompt-card {
+            border-color: #C4B5FD;
+            background: linear-gradient(180deg, #F5F3FF 0%, #FFFFFF 100%);
+        }
+
+        .tri-card.after-card {
+            border-color: #86EFAC;
+            background: linear-gradient(180deg, #F0FDF4 0%, #FFFFFF 100%);
+        }
+
+        .tri-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.15rem;
+            font-weight: 900;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px dashed rgba(0,0,0,0.1);
+        }
+
+        .before-card .tri-card-header { color: #DC2626; }
+        .prompt-card .tri-card-header { color: #5B21B6; }
+        .after-card .tri-card-header { color: #15803D; }
+
+        .tri-pain-box {
+            background: rgba(254, 226, 226, 0.65);
+            border-left: 4px solid #EF4444;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            font-size: 1.02rem;
+            line-height: 1.55;
+            color: #991B1B;
+            font-weight: 700;
+        }
+
+        .tri-quad-row {
+            padding: 8px 10px;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            font-size: 0.96rem;
+            line-height: 1.5;
+            border-left: 3.5px solid currentColor;
+        }
+        .tri-quad-row strong {
+            display: inline-block;
+            margin-right: 4px;
+        }
+        .tri-quad-row.q-goal {
+            background: #F0F9FF;
+            border-color: #0284C7;
+            color: #0369A1;
+        }
+        .tri-quad-row.q-context {
+            background: #FAF5FF;
+            border-color: #7C3AED;
+            color: #6D28D9;
+        }
+        .tri-quad-row.q-output {
+            background: #FFFBEB;
+            border-color: #D97706;
+            color: #B45309;
+        }
+        .tri-quad-row.q-boundaries {
+            background: #F0FDF4;
+            border-color: #16A34A;
+            color: #15803D;
+        }
+
+        .tri-highlight-list {
+            margin: 0 0 12px 0;
+            padding-left: 18px;
+            font-size: 0.98rem;
+            line-height: 1.55;
+            color: #1E293B;
+        }
+        .tri-highlight-list li {
+            margin-bottom: 6px;
+        }
+
+        /* 手機預覽與 QR Code 框 */
+        .preview-mockup-wrap {
+            margin-top: auto;
+            display: flex;
+            gap: 10px;
+            align-items: stretch;
+        }
+        .mockup-screen {
+            flex: 1;
+            background: #FFFFFF;
+            border: 2px solid #CBD5E1;
+            border-radius: 14px;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .mockup-header-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: #64748B;
+            border-bottom: 1.5px solid #F1F5F9;
+            padding-bottom: 4px;
+            margin-bottom: 6px;
+        }
+        .mockup-dot {
+            width: 8px;
+            height: 8px;
+            background: #10B981;
+            border-radius: 50%;
+        }
+        .mockup-inner-body {
+            flex: 1;
+            background: #F8FAFC;
+            border-radius: 8px;
+            padding: 8px 6px;
+            font-size: 0.82rem;
+            line-height: 1.4;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        .mockup-qr-box {
+            width: 96px;
+            background: #FFFFFF;
+            border: 2px dashed #94A3B8;
+            border-radius: 14px;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.76rem;
+            color: #475569;
+            font-weight: 800;
+        }
+        .mockup-qr-svg {
+            width: 44px;
+            height: 44px;
+            margin-bottom: 3px;
+        }
+
         .card-item {
             background: #FFFFFF;
             border: 3px solid var(--crayon-blue);
@@ -885,6 +1058,7 @@
             .quad-badge-zh { font-size: 1.25rem; }
             .quad-question { font-size: 1.12rem; }
             .quad-volunteer-tip { font-size: 0.95rem; }
+            .tri-case-layout { grid-template-columns: 1fr; gap: 14px; }
             .nav-btn {
                 font-size: 1.1rem;
                 padding: 9px 24px;
@@ -1085,6 +1259,32 @@
                 padding: 5px 8px;
             }
 
+            /* 三宮格進階案例在手機轉單欄 */
+            .tri-case-layout {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin: 8px 0;
+            }
+            .tri-card {
+                padding: 14px 14px;
+                border-radius: 16px;
+            }
+            .tri-card-header {
+                font-size: 1.05rem;
+                margin-bottom: 8px;
+            }
+            .tri-pain-box {
+                font-size: 0.92rem;
+                padding: 8px 10px;
+            }
+            .tri-quad-row {
+                font-size: 0.9rem;
+                padding: 6px 8px;
+            }
+            .preview-mockup-wrap {
+                flex-direction: row;
+            }
+
             /* 卡片與提醒區塊 */
             .card-item {
                 padding: 14px 14px;
@@ -1224,7 +1424,7 @@
             </div>
             AI 協作文書與表單統計工作坊
         </div>
-        <div class="page-indicator" id="pageIndicator">第 1 頁 / 共 17 頁</div>
+        <div class="page-indicator" id="pageIndicator">第 1 頁 / 共 19 頁</div>
     </header>
 
     <!-- Main Slide Deck Container -->
@@ -1278,15 +1478,15 @@
                     <div class="step-row">
                         <div class="sketch-num" style="color: var(--crayon-coral);">2</div>
                         <div class="step-row-content">
-                            <h3 style="color: var(--crayon-coral-dark);">45m 主專題實作</h3>
-                            <p>拉 6 欄位表單、一鍵 GAS 自動生表單、AI 產模擬資料與公式統計</p>
+                            <h3 style="color: var(--crayon-coral-dark);">45m 主專題實作 ＆ 志工團系統大揭秘</h3>
+                            <p>親手完成體表會 6 欄位招募表單、GAS 一鍵生表單與公式統計；同場加碼揭秘胡適志工團『時數上傳、入校打卡 QR Code、迎新破冰網』三大實戰系統是如何用同一套指令聊出來的！</p>
                         </div>
                     </div>
                     <div class="step-row">
                         <div class="sketch-num" style="color: var(--crayon-green);">3</div>
                         <div class="step-row-content">
                             <h3 style="color: var(--crayon-green-dark);">45m 分流沙盒</h3>
-                            <p>自選 6 大微專題或真實檔案健檢，進行現場一對一教學</p>
+                            <p>精選 4 大高效益實戰主題（防呆名冊表單、試算表自動統計、活動文案視覺包、各組真實檔案健檢），進行現場一對一改造教學。</p>
                         </div>
                     </div>
                     <div class="step-row">
@@ -1607,133 +1807,387 @@
             </div>
         </div>
 
-        <!-- 頁 10：微專題概述 -->
+        <!-- 頁 10：進階案例一｜胡適國小志工團時數上傳系統 -->
         <div class="slide-card" id="s10">
-            <h2>📂 分流沙盒：6 大微專題與真實檔案健檢</h2>
-            <div class="grid-2" style="gap: 18px;">
-                <div class="step-row">
-                    <div class="sketch-num" style="color: var(--crayon-blue);">1</div>
-                    <div class="step-row-content">
-                        <h3 style="color: var(--crayon-blue-dark);">意願分組排班</h3>
-                        <p>依志願序與人數下限自動排班表</p>
+            <div>
+                <span class="badge-pill">🚀 進階實戰揭秘：用同一套四要素，還能做出什麼？</span>
+                <h2 style="margin-bottom: 6px;">⏱️ 進階案例一｜胡適國小志工團時數上傳系統</h2>
+                <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 10px;">
+                    <strong>表單統計與行政自動化首選</strong>・效法名冊連動防呆，組長好填、人資秒統計！
+                </p>
+            </div>
+
+            <div class="tri-case-layout">
+                <!-- 左欄：Before 痛點 -->
+                <div class="tri-card before-card">
+                    <div class="tri-card-header">
+                        <span>😫</span> 過去痛點 (Before)
+                    </div>
+                    <div class="tri-pain-box">
+                        各組回傳檔案五花八門，人工重新謄打核對又慢又易錯！
+                    </div>
+                    <p style="font-size: 0.98rem; line-height: 1.6; color: #4B5563; margin-bottom: 8px;">
+                        過去每到學期末，各組上傳志工服務時數有<strong>紙本拍照、Word 表格、Excel 或 LINE 截圖</strong>，檔案格式極度混亂。
+                    </p>
+                    <p style="font-size: 0.98rem; line-height: 1.6; color: #4B5563; margin: 0;">
+                        人資幹部需逐一肉眼辨識幾百筆紀錄，並手動重新騰打進總表，不僅耗費數週，還經常遇到同音異字或算錯時數的窘境。
+                    </p>
+                </div>
+
+                <!-- 中欄：四要素拆解 -->
+                <div class="tri-card prompt-card">
+                    <div class="tri-card-header">
+                        <span>💬</span> 指令四要素拆解 (Prompt Brief)
+                    </div>
+                    <div class="tri-quad-row q-goal">
+                        <strong>【① 目標】</strong>建立統一由組長線上填寫的「志工時數上傳系統」，徹底解決多檔案辨識問題，方便人資後續秒統計。
+                    </div>
+                    <div class="tri-quad-row q-context">
+                        <strong>【② 背景】</strong>國小志工團組別多，過去回傳格式雜亂；現已有完整志工團名冊（含組別、姓名、代號）可供系統串接。
+                    </div>
+                    <div class="tri-quad-row q-output">
+                        <strong>【③ 輸出】</strong>以 Google 表單與試算表為單一工作環境，漸進式連動志工名冊，讓組長直接點選人員並填報當次服務時數。
+                    </div>
+                    <div class="tri-quad-row q-boundaries">
+                        <strong>【④ 邊界】</strong>限制資料來源！強制從名冊選取姓名（禁止手動打字防錯字與同音異字），時數欄位鎖定純數字格式。
                     </div>
                 </div>
-                <div class="step-row">
-                    <div class="sketch-num" style="color: var(--crayon-coral);">2</div>
-                    <div class="step-row-content">
-                        <h3 style="color: var(--crayon-coral-dark);">LINE 公告多版本改寫</h3>
-                        <p>一次產出公告、前一天與當日提醒</p>
+
+                <!-- 右欄：After 成果亮點與預覽 -->
+                <div class="tri-card after-card">
+                    <div class="tri-card-header">
+                        <span>✨</span> 成果亮點 (After)
                     </div>
-                </div>
-                <div class="step-row">
-                    <div class="sketch-num" style="color: var(--crayon-green);">3</div>
-                    <div class="step-row-content">
-                        <h3 style="color: var(--crayon-green-dark);">會議紀錄整理</h3>
-                        <p>雜亂筆記秒變 3 點決議與待辦分工表</p>
-                    </div>
-                </div>
-                <div class="step-row">
-                    <div class="sketch-num" style="color: var(--crayon-orange);">4</div>
-                    <div class="step-row-content">
-                        <h3 style="color: var(--crayon-orange-dark);">簽到退核對與時數</h3>
-                        <p>比對未到名單並自動換算服務時數</p>
-                    </div>
-                </div>
-                <div class="step-row">
-                    <div class="sketch-num" style="color: var(--crayon-purple-dark);">5</div>
-                    <div class="step-row-content">
-                        <h3 style="color: var(--crayon-purple-dark);">活動滿意度摘要與感謝文</h3>
-                        <p>整理問卷重點、改進建議與溫馨感謝文</p>
-                    </div>
-                </div>
-                <div class="step-row" style="border-color: var(--crayon-coral);">
-                    <div class="sketch-num" style="color: var(--crayon-coral);">6</div>
-                    <div class="step-row-content">
-                        <h3 style="color: var(--crayon-coral-dark);">目前遇到的困難（一對一教學）</h3>
-                        <p>直接拿手邊卡關的真實團務檔案現場實戰健檢</p>
+                    <ul class="tri-highlight-list">
+                        <li><strong>全面標準化：</strong>告別紙本拍照與碎檔案，線上統一回傳。</li>
+                        <li><strong>名冊連動防呆：</strong>組長下拉點選好填，杜絕錯字漏字。</li>
+                        <li><strong>後台秒統計：</strong>試算表公式自動彙整，期末一鍵產出時數卡！</li>
+                    </ul>
+
+                    <div class="preview-mockup-wrap">
+                        <div class="mockup-screen">
+                            <div class="mockup-header-bar">
+                                <span class="mockup-dot"></span>
+                                <span>時數上傳系統</span>
+                            </div>
+                            <div class="mockup-inner-body">
+                                <div style="font-weight: 800; color: #1E3A8A; margin-bottom: 2px;">胡適國小志工團</div>
+                                <div style="font-size: 0.75rem; color: #64748B;">[組別] 導護組 ▾</div>
+                                <div style="font-size: 0.75rem; color: #0284C7; font-weight: 700;">[姓名] 名冊連動選取 ▾</div>
+                                <div style="margin-top: 4px; background: #22C55E; color: #FFF; padding: 2px 4px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">一鍵填報完成 ✔</div>
+                            </div>
+                        </div>
+                        <div class="mockup-qr-box">
+                            <svg class="mockup-qr-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                                <path d="M7 7h.01"></path>
+                                <path d="M17 7h.01"></path>
+                                <path d="M7 17h.01"></path>
+                                <path d="M17 17h.01"></path>
+                            </svg>
+                            <span>掃碼體驗</span>
+                            <span style="font-size: 0.68rem; color: #94A3B8;">時數系統</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="highlight-box" style="margin-top: 18px; margin-bottom: 0;">
-                <p style="margin:0; font-size: 1.3rem; font-weight: 900; color: var(--crayon-coral-dark);">
+        </div>
+
+        <!-- 頁 11：進階案例二｜入校打卡 QR Code 製作應用 -->
+        <div class="slide-card" id="s11">
+            <div>
+                <span class="badge-pill">🚀 進階實戰揭秘：用同一套四要素，還能做出什麼？</span>
+                <h2 style="margin-bottom: 6px;">📲 進階案例二｜入校打卡 QR Code 製作應用</h2>
+                <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 10px;">
+                    <strong>文書處理與試算表實作</strong>・零成本把 Google 試算表變免費雲端資料庫！
+                </p>
+            </div>
+
+            <div class="tri-case-layout">
+                <!-- 左欄：Before 痛點 -->
+                <div class="tri-card before-card">
+                    <div class="tri-card-header">
+                        <span>😫</span> 過去痛點 (Before)
+                    </div>
+                    <div class="tri-pain-box">
+                        紙本簽到排隊塞車難統計，死板問卷手機極難按！
+                    </div>
+                    <p style="font-size: 0.98rem; line-height: 1.6; color: #4B5563; margin-bottom: 8px;">
+                        傳統紙本簽到在值勤尖峰（如導護晨間 07:30）容易在警衛室排隊塞車；字跡潦草導致期末核對紙本像猜謎。
+                    </p>
+                    <p style="font-size: 0.98rem; line-height: 1.6; color: #4B5563; margin: 0;">
+                        若換成原生 Google 表單，介面長得太像死板問卷、字體細碎，志工站在校門口單手用手機操作非常不便。
+                    </p>
+                </div>
+
+                <!-- 中欄：四要素拆解 -->
+                <div class="tri-card prompt-card">
+                    <div class="tri-card-header">
+                        <span>💬</span> 指令四要素拆解 (Prompt Brief)
+                    </div>
+                    <div class="tri-quad-row q-goal">
+                        <strong>【① 目標】</strong>將枯燥的表單升級成「直覺點選的入校打卡網頁」，並搭配警衛室與各崗位專屬 QR Code。
+                    </div>
+                    <div class="tri-quad-row q-context">
+                        <strong>【② 背景】</strong>志工入校需快速簽到，希望零預算、免租用伺服器，做出美觀且符合手機操作習慣的打卡畫面。
+                    </div>
+                    <div class="tri-quad-row q-output">
+                        <strong>【③ 輸出】</strong>透過與 AI 對談撰寫 Google Apps Script (GAS) 與前端介面，串接後台自動記錄精準打卡時間戳記。
+                    </div>
+                    <div class="tri-quad-row q-boundaries">
+                        <strong>【④ 邊界】</strong>必須完全把免費的「Google 試算表」當作唯一資料庫；介面需符合手機單手大按鈕點選習慣。
+                    </div>
+                </div>
+
+                <!-- 右欄：After 成果亮點與預覽 -->
+                <div class="tri-card after-card">
+                    <div class="tri-card-header">
+                        <span>✨</span> 成果亮點 (After)
+                    </div>
+                    <ul class="tri-highlight-list">
+                        <li><strong>零軟體成本：</strong>免買打卡鐘或租伺服器，試算表直接當資料庫。</li>
+                        <li><strong>GAS 升級介面：</strong>超大按鈕單手點選，手機掃碼 3 秒搞定。</li>
+                        <li><strong>自動時間戳：</strong>出勤精準記錄，後台再也不用人工追蹤簽到退！</li>
+                    </ul>
+
+                    <div class="preview-mockup-wrap">
+                        <div class="mockup-screen">
+                            <div class="mockup-header-bar">
+                                <span class="mockup-dot"></span>
+                                <span>入校打卡頁面</span>
+                            </div>
+                            <div class="mockup-inner-body">
+                                <div style="font-weight: 800; color: #1E3A8A; margin-bottom: 2px;">🏫 志工入校打卡</div>
+                                <div style="font-size: 0.72rem; color: #64748B;">早安！請點選簽到</div>
+                                <div style="margin: 4px auto; background: #3B82F6; color: #FFF; padding: 4px 10px; border-radius: 8px; font-size: 0.8rem; font-weight: 900; width: 85%;">🟢 我入校了！</div>
+                                <div style="font-size: 0.7rem; color: #10B981; font-weight: 700;">打卡成功 07:42</div>
+                            </div>
+                        </div>
+                        <div class="mockup-qr-box">
+                            <svg class="mockup-qr-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                                <path d="M7 7h.01"></path>
+                                <path d="M17 7h.01"></path>
+                                <path d="M7 17h.01"></path>
+                                <path d="M17 17h.01"></path>
+                            </svg>
+                            <span>掃碼體驗</span>
+                            <span style="font-size: 0.68rem; color: #94A3B8;">打卡系統</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁 12：進階案例三｜志工團迎新報名網站與破冰互動遊戲 -->
+        <div class="slide-card" id="s12">
+            <div>
+                <span class="badge-pill">🚀 進階實戰揭秘：用同一套四要素，還能做出什麼？</span>
+                <h2 style="margin-bottom: 6px;">🎉 進階案例三｜志工團迎新報名網站與破冰互動遊戲</h2>
+                <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 10px;">
+                    <strong>活動應用與整合實戰</strong>・結合線上報名與現場破冰遊戲的一站式入口！
+                </p>
+            </div>
+
+            <div class="tri-case-layout">
+                <!-- 左欄：Before 痛點 -->
+                <div class="tri-card before-card">
+                    <div class="tri-card-header">
+                        <span>😫</span> 過去痛點 (Before)
+                    </div>
+                    <div class="tri-pain-box">
+                        表單缺乏迎新溫度，現場活動準備工具零散又繁瑣！
+                    </div>
+                    <p style="font-size: 0.98rem; line-height: 1.6; color: #4B5563; margin-bottom: 8px;">
+                        一般 Google 表單冰冷死板，缺乏迎新活動熱鬧溫暖的號召力，新手家長常因缺乏吸引力而遲疑未報名。
+                    </p>
+                    <p style="font-size: 0.98rem; line-height: 1.6; color: #4B5563; margin: 0;">
+                        活動當天現場還要額外準備紙本破冰教材、簡報與各組計分牌，籌備多頭馬車，幹部在場控上手忙腳亂。
+                    </p>
+                </div>
+
+                <!-- 中欄：四要素拆解 -->
+                <div class="tri-card prompt-card">
+                    <div class="tri-card-header">
+                        <span>💬</span> 指令四要素拆解 (Prompt Brief)
+                    </div>
+                    <div class="tri-quad-row q-goal">
+                        <strong>【① 目標】</strong>打造結合「報名表單統計」與「現場互動問答／小遊戲」的一站式迎新活動入口網站。
+                    </div>
+                    <div class="tri-quad-row q-context">
+                        <strong>【② 背景】</strong>志工團迎新活動，希望新舊志工在報名的同時能輕鬆認識各組別特色與各組組長。
+                    </div>
+                    <div class="tri-quad-row q-output">
+                        <strong>【③ 輸出】</strong>跟 AI 討論活動流程，一步步產出溫暖配色的報名頁、各組認識破冰遊戲與後台報名彙整表。
+                    </div>
+                    <div class="tri-quad-row q-boundaries">
+                        <strong>【④ 邊界】</strong>嚴格控管名單與細節正確性！透過對話隨時微調（例如指令：「園藝組組長名字是純敏，錯字請幫我修正」）。
+                    </div>
+                </div>
+
+                <!-- 右欄：After 成果亮點與預覽 -->
+                <div class="tri-card after-card">
+                    <div class="tri-card-header">
+                        <span>✨</span> 成果亮點 (After)
+                    </div>
+                    <ul class="tri-highlight-list">
+                        <li><strong>一站式體驗：</strong>報名彙整結合現場破冰遊戲，一個連結搞定。</li>
+                        <li><strong>與 AI 協作微調：</strong>對話即可即時更新組長資料與錯字，極具彈性。</li>
+                        <li><strong>互動感倍增：</strong>溫暖活潑的破冰頁面，讓新手家長快速融入志工大家庭！</li>
+                    </ul>
+
+                    <div class="preview-mockup-wrap">
+                        <div class="mockup-screen">
+                            <div class="mockup-header-bar">
+                                <span class="mockup-dot"></span>
+                                <span>迎新活動入口網</span>
+                            </div>
+                            <div class="mockup-inner-body">
+                                <div style="font-weight: 800; color: #7C3AED; margin-bottom: 2px;">🎈 歡迎加入胡適志工</div>
+                                <div style="margin: 2px 0; background: #FDE047; color: #713F12; padding: 2px 6px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">📝 線上報名填寫</div>
+                                <div style="margin: 2px 0; background: #C4B5FD; color: #3B0764; padding: 2px 6px; border-radius: 6px; font-size: 0.72rem; font-weight: 800;">🎮 組長認識破冰遊戲</div>
+                            </div>
+                        </div>
+                        <div class="mockup-qr-box">
+                            <svg class="mockup-qr-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="3" width="7" height="7"></rect>
+                                <rect x="14" y="14" width="7" height="7"></rect>
+                                <rect x="3" y="14" width="7" height="7"></rect>
+                                <path d="M7 7h.01"></path>
+                                <path d="M17 7h.01"></path>
+                                <path d="M7 17h.01"></path>
+                                <path d="M17 17h.01"></path>
+                            </svg>
+                            <span>掃碼體驗</span>
+                            <span style="font-size: 0.68rem; color: #94A3B8;">迎新網站</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 頁 13：分流沙盒 4 大主題概述 -->
+        <div class="slide-card" id="s13">
+            <div>
+                <span class="badge-pill">🛠️ 45m 現場動手做</span>
+                <h2 style="margin-bottom: 10px;">📂 分流沙盒：4 大高效益實戰主題</h2>
+                <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 12px;">
+                    依您組別目前最急迫的需求，挑選適合的主題深入實作，或由講師一對一現場改造您的真實檔案：
+                </p>
+            </div>
+
+            <!-- 2x2 寬敞網格排版 -->
+            <div class="grid-2" style="gap: 16px;">
+                <!-- 主題 1 -->
+                <div class="step-row" style="border-color: var(--crayon-blue); background: #FAFDFE; padding: 18px 20px;">
+                    <div class="sketch-num" style="color: var(--crayon-blue); width: 52px; height: 52px; min-width: 52px; font-size: 1.6rem;">1</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-blue-dark); font-size: 1.35rem; margin-bottom: 6px;">【表單防呆實戰】各組專屬「名冊連動＆排班/回報表單」</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.55; color: #4B5563;">
+                            <strong>適用情境：</strong>效法「時數上傳系統」，拿自己組別的名單，用 GAS 或表單架構做出<strong>不會填錯字的線上回報/排班表</strong>。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 主題 2 -->
+                <div class="step-row" style="border-color: var(--crayon-coral); background: #FFFBFB; padding: 18px 20px;">
+                    <div class="sketch-num" style="color: var(--crayon-coral); width: 52px; height: 52px; min-width: 52px; font-size: 1.6rem;">2</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-coral-dark); font-size: 1.35rem; margin-bottom: 6px;">【數據統計實戰】試算表「複雜條件統計＆自動彙整看板」</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.55; color: #4B5563;">
+                            <strong>適用情境：</strong>名單收回來後不再手算！請 AI 寫出專屬試算表公式，<strong>一鍵算好出席次數、時數加總或餐點人數</strong>。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 主題 3 -->
+                <div class="step-row" style="border-color: #F59E0B; background: #FFFDF7; padding: 18px 20px;">
+                    <div class="sketch-num" style="color: #F59E0B; width: 52px; height: 52px; min-width: 52px; font-size: 1.6rem;">3</div>
+                    <div class="step-row-content">
+                        <h3 style="color: #B45309; font-size: 1.35rem; margin-bottom: 6px;">【活動企劃實戰】有溫度的「活動招募文 ＋ LINE 通知 ＋ 宣傳視覺圖指令」</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.55; color: #4B5563;">
+                            <strong>適用情境：</strong>效法「迎新活動網」，輸入粗略活動構想，一次打包產出<strong>溫暖文案、催票提醒與 ChatGPT 生圖指令</strong>。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 主題 4 -->
+                <div class="step-row" style="border-color: var(--crayon-green); background: #F8FDF9; padding: 18px 20px;">
+                    <div class="sketch-num" style="color: var(--crayon-green); width: 52px; height: 52px; min-width: 52px; font-size: 1.6rem;">4</div>
+                    <div class="step-row-content">
+                        <h3 style="color: var(--crayon-green-dark); font-size: 1.35rem; margin-bottom: 6px;">【自由健檢實戰】各組「真實棘手檔案」一對一 AI 改造門診</h3>
+                        <p style="font-size: 1.05rem; line-height: 1.55; color: #4B5563;">
+                            <strong>適用情境：</strong>把手邊真正卡關的 Excel、舊紙本照片或組務雜事拿出來，現場套用<strong>「指令四要素」量身改造</strong>！
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 16px; margin-bottom: 0;">
+                <p style="margin:0; font-size: 1.25rem; font-weight: 900; color: var(--crayon-coral-dark);">
                     ⚠️ 個資安全提醒：「練習前請先把真實姓名、電話改成代號再貼給 AI！」
                 </p>
             </div>
         </div>
 
-        <!-- 頁 11：微專題 01 與 02 -->
-        <div class="slide-card" id="s11">
-            <h2>💡 微專題 01 與 02 實戰提示詞</h2>
+        <!-- 頁 14：沙盒主題 1 與 主題 2 實戰提示詞 -->
+        <div class="slide-card" id="s14">
+            <h2>💡 沙盒主題 1 與 主題 2 實戰提示詞</h2>
             <div class="prompt-label" style="color: var(--crayon-blue-dark);">
                 <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-blue);">1</span>
-                微專題 01：意願分組排班
+                主題 1：【表單防呆實戰】名冊連動＆排班/回報表單
             </div>
             <div class="prompt-container">
                 <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box">你是志工團幹部。以下是各組志工的意願調查結果：（貼上資料）請依『每時段至少 3 人、每人最多排 2 個時段、優先尊重志願序』排出班表，以表格輸出（時段／工作項目／人員），並標出缺人時段與調度建議。</div>
+                <div class="prompt-box">你是國小志工團行政顧問。我有我們組別的志工名冊：（貼上名冊，姓名已改代號）。請幫我設計一份「Google 表單架構」或「Google Apps Script (GAS) 程式碼」，要求：1. 志工姓名必須用下拉選單限制只能從名冊選取，防止組員填錯名字 2. 欄位包含：姓名、回報日期、服務時數（限填純數字防呆）、工作項目（單選或核取方塊）3. 請給我可直接執行的設定步驟與完整程式碼。</div>
             </div>
 
             <div class="prompt-label" style="color: var(--crayon-coral-dark);">
                 <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-coral);">2</span>
-                微專題 02：LINE 公告多版本改寫
+                主題 2：【數據統計實戰】試算表複雜條件統計與彙整
             </div>
             <div class="prompt-container">
                 <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box" style="border-color: var(--crayon-coral);">請把以下活動資訊改寫成三個版本：①LINE 群組公告（150 字內、重點條列、適量 emoji）②前一天提醒（50 字）③當天早上集合通知（30 字）。活動資訊：（貼上）</div>
+                <div class="prompt-box" style="border-color: var(--crayon-coral);">我的 Google 試算表收回了志工回報資料，欄位包含：A 姓名、B 組別、C 服務時數、D 支援項目（複選，用頓號分隔）。資料從第 2 列開始。請給我可以直接貼上的試算表公式：1. 統計指定組別的總服務時數（SUMIF） 2. 統計有勾選特定項目的總人次（COUNTIF 搭配萬用字元 *） 3. 產出一份未達 5 小時志工清單的篩選公式（FILTER 或 QUERY）。請以表格清楚標示每個公式貼在哪一個儲存格！</div>
             </div>
         </div>
 
-        <!-- 頁 12：微專題 03 與 04 -->
-        <div class="slide-card" id="s12">
-            <h2>💡 微專題 03 與 04 實戰提示詞</h2>
-            <div class="prompt-label" style="color: var(--crayon-green-dark);">
-                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-green);">3</span>
-                微專題 03：會議紀錄整理
-            </div>
-            <div class="prompt-container">
-                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box" style="border-color: var(--crayon-green);">以下是會議筆記：（貼上）請整理成：①3 點決議 ②待辦分工表（事項／負責人／期限）③下次會議待討論事項。語氣簡潔，可直接貼進 LINE。</div>
-            </div>
-
-            <div class="prompt-label" style="color: var(--crayon-orange-dark);">
-                <span class="sketch-num" style="width: 44px; height: 44px; min-width: 44px; font-size: 1.4rem; color: var(--crayon-orange);">4</span>
-                微專題 04：簽到退名單比對與時數
-            </div>
-            <div class="prompt-container">
-                <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box" style="border-color: var(--crayon-orange);">名單 A 是報名名單，名單 B 是簽到退紀錄（含簽到、簽退時間）：（貼上，姓名已去識別）請找出：①報名但未到 ②未報名卻到場 ③每人服務時數（以 0.5 小時為單位）。以表格輸出，並標示異常。</div>
-            </div>
-        </div>
-
-        <!-- 頁 13：微專題 05 與微專題 06 (實作練習一對一教學) -->
-        <div class="slide-card" id="s13">
-            <h2>🛠️ 微專題 05 與 微專題 06（現場實戰）</h2>
-            <div class="prompt-label" style="color: var(--crayon-purple-dark); margin-top: 0;">
-                <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: var(--crayon-purple-dark);">5</span>
-                微專題 05：滿意度摘要
+        <!-- 頁 15：沙盒主題 3 與 主題 4 實戰提示詞 -->
+        <div class="slide-card" id="s15">
+            <h2>🛠️ 沙盒主題 3 與 主題 4（現場實戰）</h2>
+            <div class="prompt-label" style="color: #B45309; margin-top: 0;">
+                <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: #B45309;">3</span>
+                主題 3：【活動企劃實戰】招募文 ＋ LINE 通知 ＋ 生圖指令包
             </div>
             <div class="prompt-container" style="margin-bottom: 16px;">
                 <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box" style="max-height: 110px; border-color: var(--crayon-purple);">以下是問卷回覆：（貼上）請輸出：①整體滿意度 3 句重點 ②優點與待改進各 3 點 ③匿名代表性意見 3 則 ④下次建議行動 ⑤100 字感謝文（可貼 LINE）。</div>
+                <div class="prompt-box" style="max-height: 120px; border-color: #F59E0B;">我們志工團即將舉辦活動，初步構想如下：【活動名稱：XXX、日期時間：XXX、地點：XXX、目標對象：XXX】。請幫我一次打包產出 3 項宣傳素材：1. 溫暖號召的 LINE 報名公告（約 150 字、吸引人的 emoji、條列重點） 2. 活動前 1 天的簡短催票/提醒短訊（約 50 字） 3. 可直接貼給 ChatGPT / Midjourney 的「宣傳海報生圖提示詞（Prompt）」（中文與英文各一份，描述溫馨手繪插畫風格、國小校園與熱心志工氛圍）。</div>
             </div>
 
-            <div class="prompt-label" style="color: var(--crayon-coral-dark); margin-top: 0;">
-                <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: var(--crayon-coral-dark);">6</span>
-                微專題 06：目前遇到的困難（實作練習一對一教學）
+            <div class="prompt-label" style="color: var(--crayon-green-dark); margin-top: 0;">
+                <span class="sketch-num" style="width: 42px; height: 42px; min-width: 42px; font-size: 1.3rem; color: var(--crayon-green-dark);">4</span>
+                主題 4：【自由健檢實戰】各組「真實棘手檔案」一對一 AI 改造門診
             </div>
             <div class="prompt-container" style="margin-bottom: 8px;">
                 <button class="copy-btn" onclick="copyText(this)">複製指令</button>
-                <div class="prompt-box" style="max-height: 110px; border-color: var(--crayon-coral);">我是國小志工團幹部，目前在處理志工行政時遇到這個實際困難與檔案需求：（貼上已去識別化的問題或表格內容）。請一步一步引導我解決：①先告訴我最推薦用什麼方式處理 ②給我具體步驟或直接可套用的公式/文案。</div>
+                <div class="prompt-box" style="max-height: 120px; border-color: var(--crayon-green);">我是國小志工團幹部，目前在處理志工行政時遇到這個實際困難與檔案需求：（貼上已去識別化的問題或表格內容）。請套用「目標・背景・輸出・邊界」四要素，一步一步引導我解決：① 先告訴我最推薦用什麼工具或方式處理（表單/試算表公式/GAS） ② 給我具體操作步驟，或直接產出可套用的公式與程式碼！</div>
             </div>
             <div style="background: #FFFDF5; border: 2.5px dashed var(--crayon-orange); padding: 10px 18px; border-radius: 14px; text-align: center;">
                 <p style="margin: 0; font-size: 1.15rem; font-weight: 800; color: var(--crayon-orange-dark);">
-                    🙋‍♀️ 現場卡關請直接舉手！講師將帶著您的實際團務檔案進行一對一實作健檢。
+                    🙋‍♀️ 現場卡關請直接舉手！講師將帶著您的實際團務檔案進行一對一現場改造門診。
                 </p>
             </div>
         </div>
 
-        <!-- 頁 14 (獨立頁)：幹部 10 則隨身萬用指令包 -->
-        <div class="slide-card" id="s14">
+        <!-- 頁 16 (獨立頁)：幹部 10 則隨身萬用指令包 -->
+        <div class="slide-card" id="s16">
             <div>
                 <span class="badge-pill" style="margin-bottom: 8px;">🎁 隨身百寶箱</span>
                 <h2 style="margin-bottom: 10px;">📋 幹部 10 則隨身萬用指令包</h2>
@@ -1768,8 +2222,8 @@
             </div>
         </div>
 
-        <!-- 頁 15：四查口訣、生圖查錯字與個資提醒 -->
-        <div class="slide-card" id="s15">
+        <!-- 頁 17：四查口訣、生圖查錯字與個資提醒 -->
+        <div class="slide-card" id="s17">
             <h2>🛡️ 四查口訣、生圖查錯字與個資防護</h2>
             <div class="card-item orange" style="margin-bottom: 14px; background: #FFFDF5;">
                 <p style="margin: 0; font-weight: 900; font-size: 1.4rem; color: var(--crayon-orange-dark);">
@@ -1798,8 +2252,8 @@
             </div>
         </div>
 
-        <!-- 頁 16：卡關急救包 -->
-        <div class="slide-card" id="s16">
+        <!-- 頁 18：卡關急救包 -->
+        <div class="slide-card" id="s18">
             <h2>🛟 卡關急救包（遇到問題這樣問 AI）</h2>
             <div class="grid-2" style="gap: 20px;">
                 <div class="card-item coral">
@@ -1826,8 +2280,8 @@
             </div>
         </div>
 
-        <!-- 頁 17：結語 -->
-        <div class="slide-card" id="s17">
+        <!-- 頁 19：結語 -->
+        <div class="slide-card" id="s19">
             <div style="text-align: center; padding: 10px 0;">
                 <span class="badge-pill" style="font-size: 1.35rem; padding: 10px 28px;">🎉 動手實作，解放雙手！</span>
                 <div class="crayon-banner-title" style="margin: 14px 0;">
@@ -1908,10 +2362,11 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        const totalSlides = 17;
+        let totalSlides = document.querySelectorAll('.slide-card').length || 19;
         let currentSlide = 1;
 
         function getSlideFromHash() {
+            totalSlides = document.querySelectorAll('.slide-card').length || 19;
             const hash = window.location.hash;
             const match = hash.match(/#s(\d+)/);
             if (match) {
@@ -1924,22 +2379,21 @@
         }
 
         function showSlide(n) {
+            const allCards = document.querySelectorAll('.slide-card');
+            totalSlides = allCards.length || 19;
             if (n < 1) n = 1;
             if (n > totalSlides) n = totalSlides;
             currentSlide = n;
 
             history.replaceState(null, null, `#s${currentSlide}`);
 
-            for (let i = 1; i <= totalSlides; i++) {
-                const card = document.getElementById(`s${i}`);
-                if (card) {
-                    if (i === currentSlide) {
-                        card.classList.add('active');
-                    } else {
-                        card.classList.remove('active');
-                    }
+            allCards.forEach((card, idx) => {
+                if (idx + 1 === currentSlide) {
+                    card.classList.add('active');
+                } else {
+                    card.classList.remove('active');
                 }
-            }
+            });
 
             document.getElementById('pageIndicator').innerText = `第 ${currentSlide} 頁 / 共 ${totalSlides} 頁`;
             document.getElementById('prevBtn').disabled = (currentSlide === 1);
