@@ -377,6 +377,17 @@
             border: 2.5px solid var(--crayon-yellow);
         }
 
+        a.badge-pill {
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        a.badge-pill:hover {
+            transform: translateY(-2px);
+            background: #FFEAA0;
+            box-shadow: 0 4px 12px rgba(245, 166, 76, 0.35);
+        }
+
         /* 提示詞複製框 */
         .prompt-label {
             font-size: 1.3rem;
@@ -1559,7 +1570,7 @@
         <!-- 頁 2：課間輕鬆小品 / 吸睛案例分享（Threads 熱議） -->
         <div class="slide-card" id="s2">
             <div>
-                <span class="badge-pill" style="margin-bottom: 10px;">🔥 Threads 熱搜話題・課間吸睛小品</span>
+                <a href="https://www.threads.com/share/_jDs8nJuk" target="_blank" rel="noopener noreferrer" class="badge-pill" style="margin-bottom: 10px; display: inline-flex; align-items: center; gap: 8px;">🔥 Threads 熱搜話題・課間吸睛小品 <span>↗</span></a>
                 <h2 style="margin-bottom: 8px;">🎒 不只做文書！爸媽用 AI 破解育兒與學習痛點</h2>
                 <p style="font-size: 1.15rem; color: var(--text-muted); margin-bottom: 14px;">
                     不用寫一行程式碼！只要把生活痛點說清楚，AI 就能幫你客製出專屬的教育與學習神器：
